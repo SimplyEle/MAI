@@ -1,3 +1,3 @@
 # fundamental_ai_labs
 
-dataset: ...
+dataset: https://www.kaggle.com/datasets/mateusdmachado/csgo-professional-matches?select=players.csv

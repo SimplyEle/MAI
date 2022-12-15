@@ -6,7 +6,6 @@ public class RaycasterTarget : MonoBehaviour
 {
     private Score score;
 
-    // Use this for initialization
     void Start()
     {
         score = GameObject.Find("AssaultRIfle_02").GetComponent<Score>();
@@ -19,7 +18,8 @@ public class RaycasterTarget : MonoBehaviour
             Debug.Log("First");
             score.AddScore(10);
         }
-        else if (gameObject.CompareTag("Target2line")) {
+        else if (gameObject.CompareTag("Target2line")) 
+        {
             Debug.Log("Second");
             score.AddScore(20);
         }
@@ -28,6 +28,5 @@ public class RaycasterTarget : MonoBehaviour
             Debug.Log("Third");
             score.AddScore(30);
         }
-        
     }
 }

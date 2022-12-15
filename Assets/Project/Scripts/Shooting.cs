@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Shooting : MonoBehaviour
 {
-    // Use this for initialization
+
     void Start()
     {
     }
-    // Update is called once per frame
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -23,6 +23,10 @@ public class Shooting : MonoBehaviour
                 ))
             {
                 hit.collider.SendMessage("RayTargetHit", SendMessageOptions.DontRequireReceiver);
+                if (hit.transform.CompareTag("Target1line") || hit.transform.CompareTag("Target2line") || hit.transform.CompareTag("Target3line")) 
+                {
+                    Destroy(hit.transform.gameObject);
+                } 
             }
         }
     }

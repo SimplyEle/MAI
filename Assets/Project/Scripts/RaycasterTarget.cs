@@ -8,18 +8,19 @@ public class RaycasterTarget : MonoBehaviour
 
     void Start()
     {
-        score = GameObject.Find("AssaultRIfle_02").GetComponent<Score>();
+        score = GameObject.Find("GameManager").GetComponent<Score>();
+        
     }
 
     public void RayTargetHit()
     {
         if (gameObject.CompareTag("Target1line"))
-        {
+        {            
             Debug.Log("First");
             score.AddScore(10);
         }
         else if (gameObject.CompareTag("Target2line")) 
-        {
+        {   
             Debug.Log("Second");
             score.AddScore(20);
         }

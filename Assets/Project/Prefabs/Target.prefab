@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4559927723188237626}
   m_Layer: 0
   m_Name: MESH_ARCHERY_Target
-  m_TagString: Target1line
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5243352485607431202}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 419, y: 76, z: 188}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -134,9 +134,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8602351390862717558}
-  m_LocalRotation: {x: -0, y: 0.000000014901159, z: -1, w: 0}
-  m_LocalPosition: {x: 17.55, y: 8.209999, z: 7.120001}
-  m_LocalScale: {x: 0.050000023, y: 0.050000023, z: 0.05}
+  m_LocalRotation: {x: 0, y: 0, z: -1, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3985155818339038554}

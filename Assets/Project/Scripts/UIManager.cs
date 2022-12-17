@@ -6,17 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public RectTransform StartPanel;
+    public RectTransform GameModesPanel;
+    public RectTransform TimePanel;
+    public RectTransform PointsPanel;
+    public RectTransform ShootsPanel;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    private GameModes gameModes;
+
     public void StartGame()
     {
         SceneManager.LoadScene("SceneTargets");
@@ -27,5 +24,29 @@ public class UIManager : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
+    }
+
+    public void ChooseGameMode()
+    {
+        StartPanel.gameObject.SetActive(false);
+        GameModesPanel.gameObject.SetActive(true);
+    }
+
+    public void SetGameModeOnTime()
+    {
+        gameModes.gameMode = "onTime";
+    }
+    public void SetGameModeNumOfShots()
+    {
+        gameModes.gameMode = "numOfShots";
+    }
+    public void SetGameModeNumOfPoints()
+    {
+        gameModes.gameMode = "numOfPoints";
+    }
+
+    public void SetGameModeValue(int value)
+    {
+        gameModes.gameModeValue = value;
     }
 }

@@ -32,19 +32,20 @@ public class Shooting : MonoBehaviour
                     {
                         for (int i=0; i < spawnTargets.GetFirstLinePositions().Count; i++)
                         {
-                            spawnTargets.GetFirstLinePositions()[i] = System.Math.Round(spawnTargets.GetFirstLinePositions()[i], 4);
+                            spawnTargets.GetFirstLinePositions()[i] = System.Math.Round(spawnTargets.GetFirstLinePositions()[i], 1);
                         }
-                        double value = System.Math.Round(hit.transform.parent.transform.position.x, 4);
+                        double value = System.Math.Round(hit.transform.parent.transform.position.x, 1);
                         int posId = spawnTargets.GetFirstLinePositions().IndexOf(value);
                         spawnTargets.GetFirstLinePositions().RemoveAt(posId);
+                        Debug.Log("Value= " + value);
                     }
                     else if (hit.transform.CompareTag("Target2line"))
                     {
                         for (int i = 0; i < spawnTargets.GetSecondLinePositions().Count; i++)
                         {
-                            spawnTargets.GetSecondLinePositions()[i] = System.Math.Round(spawnTargets.GetSecondLinePositions()[i], 4);
+                            spawnTargets.GetSecondLinePositions()[i] = System.Math.Round(spawnTargets.GetSecondLinePositions()[i], 1);
                         }
-                        double value = System.Math.Round(hit.transform.parent.transform.position.x, 4);
+                        double value = System.Math.Round(hit.transform.parent.transform.position.x, 1);
                         int posId = spawnTargets.GetSecondLinePositions().IndexOf(value);
                         spawnTargets.GetSecondLinePositions().RemoveAt(posId);
                     }
@@ -52,9 +53,9 @@ public class Shooting : MonoBehaviour
                     {
                         for (int i = 0; i < spawnTargets.GetThirdLinePositions().Count; i++)
                         {
-                            spawnTargets.GetThirdLinePositions()[i] = System.Math.Round(spawnTargets.GetThirdLinePositions()[i], 4);
+                            spawnTargets.GetThirdLinePositions()[i] = System.Math.Round(spawnTargets.GetThirdLinePositions()[i], 1);
                         }
-                        double value = System.Math.Round(hit.transform.parent.transform.position.x, 4);
+                        double value = System.Math.Round(hit.transform.parent.transform.position.x, 1);
                         int posId = spawnTargets.GetThirdLinePositions().IndexOf(value);
                         spawnTargets.GetThirdLinePositions().RemoveAt(posId);
                     }

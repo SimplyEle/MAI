@@ -8,18 +8,16 @@ public class Shooting : MonoBehaviour
     private SpawnTargets spawnTargets;
     private int shots;
 
-    void Start()
+    private void Start()
     {
         spawnTargets = GameObject.Find("GameManager").GetComponent<SpawnTargets>();
-        
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
             shots++;
-            Debug.Log("bang!");
             RaycastHit hit;
             if (Physics.Raycast(
                     Camera.main.transform.position,
@@ -40,7 +38,6 @@ public class Shooting : MonoBehaviour
                         double value = System.Math.Round(hit.transform.parent.transform.position.x, 1);
                         int posId = spawnTargets.GetFirstLinePositions().IndexOf(value);
                         spawnTargets.GetFirstLinePositions().RemoveAt(posId);
-                        Debug.Log("Value= " + value);
                     }
                     else if (hit.transform.CompareTag("Target2line"))
                     {

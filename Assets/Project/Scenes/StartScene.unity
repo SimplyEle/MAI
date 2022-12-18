@@ -3402,11 +3402,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5319781455f617544be0065e1f87d87a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartPanel: {fileID: 590445413}
-  GameModesPanel: {fileID: 36267686}
-  TimePanel: {fileID: 1151120561}
-  PointsPanel: {fileID: 984467367}
-  ShootsPanel: {fileID: 1459230506}
+  startPanel: {fileID: 590445413}
+  gameModesPanel: {fileID: 36267686}
 --- !u!4 &1596232521
 Transform:
   m_ObjectHideFlags: 0

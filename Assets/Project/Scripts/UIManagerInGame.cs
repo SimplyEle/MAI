@@ -7,21 +7,25 @@ using StarterAssets;
 
 public class UIManagerInGame : MonoBehaviour
 {
-    public RectTransform InGameOverlay;
-    public RectTransform GameOverPanel;
-    public RectTransform EscPanel;
-    public TextMeshProUGUI textScoreResult;
+    private DontDestroy dontDestroy;
+
     private bool isPause;
 
-    private DontDestroy dontDestroy;
+    public RectTransform inGameOverlay;
+    public RectTransform gameOverPanel;
+    public RectTransform escPanel;
+    public TextMeshProUGUI textScoreResult;
+
     private void Start()
     {
         isPause = false;
         dontDestroy = GameObject.Find("ObjectDontDestroy").GetComponent<DontDestroy>();
+
         if (GameObject.Find("PlayerCapsule").GetComponent<FirstPersonController>().enabled == false)
         {
             GameObject.Find("PlayerCapsule").GetComponent<FirstPersonController>().enabled = true;
         }
+
         if (dontDestroy.gameMode == "numOfPoints" || dontDestroy.gameMode == "numOfShots")
         {
             GameObject.Find("TimerText").SetActive(false);
@@ -33,8 +37,6 @@ public class UIManagerInGame : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape)) 
         {
             SetPause();
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.Confined;
         }
     }
 
@@ -42,8 +44,8 @@ public class UIManagerInGame : MonoBehaviour
     {
         GameObject.Find("PlayerCapsule").GetComponent<FirstPersonController>().enabled = false;
         textScoreResult.text = "Score: " + GameObject.Find("GameManager").GetComponent<Score>().GetScore();
-        InGameOverlay.gameObject.SetActive(false);
-        GameOverPanel.gameObject.SetActive(true);
+        inGameOverlay.gameObject.SetActive(false);
+        gameOverPanel.gameObject.SetActive(true);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
     }
@@ -53,27 +55,36 @@ public class UIManagerInGame : MonoBehaviour
         if (!isPause)
         {
             Time.timeScale = 0;
-            EscPanel.gameObject.SetActive(true);
+            escPanel.gameObject.SetActive(true);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.Confined;
             GameObject.Find("PlayerCapsule").GetComponent<FirstPersonController>().enabled = false;
         }
         else
         {
             GameObject.Find("PlayerCapsule").GetComponent<FirstPersonController>().enabled = true;
-            EscPanel.gameObject.SetActive(false);
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            escPanel.gameObject.SetActive(false);
             Time.timeScale = 1;
         }
         isPause = !isPause;
     }
+
     public void ExitInMainMenu()
     {
+        if (isPause)
+        {
+            Time.timeScale = 1;
+        }
         SceneManager.LoadScene("StartScene");
     }
 
     public void Restart()
     {
-        if (EscPanel.gameObject.activeInHierarchy)
+        if (escPanel.gameObject.activeInHierarchy)
         {
-            EscPanel.gameObject.SetActive(false);
+            escPanel.gameObject.SetActive(false);
             SetPause();
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
@@ -82,25 +93,28 @@ public class UIManagerInGame : MonoBehaviour
         {
             GameObject.Find("PlayerCapsule").GetComponent<FirstPersonController>().enabled = true;
         }
-        if (dontDestroy.gameMode == "onTime")
+
+        switch (dontDestroy.gameMode)
         {
-            GameObject.Find("AssaultRIfle_02").GetComponent<Shooting>().SetZeroShots();
-            GameObject.Find("GameManager").GetComponent<Timer>().RestartTimer();
+            case "onTime":
+                GameObject.Find("AssaultRIfle_02").GetComponent<Shooting>().SetZeroShots();
+                GameObject.Find("GameManager").GetComponent<Timer>().RestartTimer();
+                break;
+            case "numOfPoints":
+                GameObject.Find("AssaultRIfle_02").GetComponent<Shooting>().SetZeroShots();
+                GameObject.Find("GameManager").GetComponent<Score>().SetZeroScore();
+                break;
+            case "numOfShots":
+                GameObject.Find("GameManager").GetComponent<Score>().SetZeroScore();
+                GameObject.Find("AssaultRIfle_02").GetComponent<Shooting>().SetZeroShots();
+                break;
         }
-        else if (dontDestroy.gameMode == "numOfPoints")
+
+        if (gameOverPanel.gameObject.activeInHierarchy)
         {
-            GameObject.Find("AssaultRIfle_02").GetComponent<Shooting>().SetZeroShots();
-            GameObject.Find("GameManager").GetComponent<Score>().SetZeroScore();
+            gameOverPanel.gameObject.SetActive(false);
         }
-        else if (dontDestroy.gameMode == "numOfShots")
-        {
-            GameObject.Find("GameManager").GetComponent<Score>().SetZeroScore();
-            GameObject.Find("AssaultRIfle_02").GetComponent<Shooting>().SetZeroShots();
-        }
-        if (GameOverPanel.gameObject.activeInHierarchy)
-        {
-            GameOverPanel.gameObject.SetActive(false);
-        }
+
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }

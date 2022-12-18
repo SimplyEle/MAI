@@ -7,7 +7,7 @@ public class DontDestroy : MonoBehaviour
     public string gameMode;
     public int gameModeValue;
 
-    void Start()
+    private void Start()
     {
         DontDestroyOnLoad(gameObject);
     }

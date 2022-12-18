@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class SpawnTargets : MonoBehaviour
 {
-
     private int countTargets = 0;
     private List<double> firstLinePositions;
     private List<double> secondLinePositions;
@@ -25,26 +24,6 @@ public class SpawnTargets : MonoBehaviour
     private List<double> targetPositionsThirdLine;
 
     public GameObject target;
-
-    public void DecCountTargets()
-    {
-        countTargets--;
-    }
-    public List<double> GetFirstLinePositions()
-    {
-        return firstLinePositions;
-    }
-
-    public List<double> GetSecondLinePositions()
-    {
-        return secondLinePositions;
-    }
-
-    public List<double> GetThirdLinePositions()
-    {
-        return thirdLinePositions;
-    }
-
 
     private List<double> CreateTargetsPositions(double start, double end)
     {
@@ -106,7 +85,7 @@ public class SpawnTargets : MonoBehaviour
         };
         for (int i = 0; i < 2; i++)
         {
-            for (int j = 0; j < 1000; j++)      // 1000 - может не попасть в условие в функции GenerateTempPosition
+            for (int j = 0; j < 1000; j++)
             {
                 GenerateTempPosition(startPos, positions, ref res);
                 if (res.Count == 3)
@@ -251,5 +230,25 @@ public class SpawnTargets : MonoBehaviour
                 }
             }
         }
+    }
+
+
+    public void DecCountTargets()
+    {
+        countTargets--;
+    }
+    public List<double> GetFirstLinePositions()
+    {
+        return firstLinePositions;
+    }
+
+    public List<double> GetSecondLinePositions()
+    {
+        return secondLinePositions;
+    }
+
+    public List<double> GetThirdLinePositions()
+    {
+        return thirdLinePositions;
     }
 }

@@ -1603,9 +1603,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7a0c7a1a714dd044bbfe1eeac62de12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InGameOverlay: {fileID: 59840246}
-  GameOverPanel: {fileID: 961673271}
-  EscPanel: {fileID: 329326714}
+  inGameOverlay: {fileID: 59840246}
+  gameOverPanel: {fileID: 961673271}
+  escPanel: {fileID: 329326714}
   textScoreResult: {fileID: 2015240833}
 --- !u!4 &621274204
 Transform:
@@ -1916,6 +1916,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiManager: {fileID: 621274203}
+  maxTime: 0
 --- !u!114 &759604588
 MonoBehaviour:
   m_ObjectHideFlags: 0

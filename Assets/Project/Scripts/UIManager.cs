@@ -6,13 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
-    public RectTransform StartPanel;
-    public RectTransform GameModesPanel;
-    public RectTransform TimePanel;
-    public RectTransform PointsPanel;
-    public RectTransform ShootsPanel;
-
     private DontDestroy gameModes;
+
+    public RectTransform startPanel;
+    public RectTransform gameModesPanel;
 
     private void Start()
     {
@@ -33,8 +30,8 @@ public class UIManager : MonoBehaviour
 
     public void ChooseGameMode()
     {
-        StartPanel.gameObject.SetActive(false);
-        GameModesPanel.gameObject.SetActive(true);
+        startPanel.gameObject.SetActive(false);
+        gameModesPanel.gameObject.SetActive(true);
     }
 
     public void SetGameModeOnTime()

@@ -4,60 +4,62 @@ using UnityEngine;
 
 public class GameModes : MonoBehaviour
 {
-    public UIManagerInGame uiManager;
     private DontDestroy dontDestroy;
 
     private int maxScore;
-    public float maxTime;
     private int maxShots;
+
+    public float maxTime;
+    public UIManagerInGame uiManager;
 
     void Start()
     {
         dontDestroy = GameObject.Find("ObjectDontDestroy").GetComponent<DontDestroy>();
-        if (dontDestroy.gameMode == "numOfShots")
+
+        switch (dontDestroy.gameMode)
         {
-            if (dontDestroy.gameModeValue == 0)
-            {
-                maxShots = 10;
-            }
-            else if (dontDestroy.gameModeValue == 1)
-            {
-                maxShots = 20;
-            }
-            else if (dontDestroy.gameModeValue == 2)
-            {
-                maxShots = 50;
-            }
-        }
-        else if (dontDestroy.gameMode == "numOfPoints")
-        {
-            if (dontDestroy.gameModeValue == 0)
-            {
-                maxScore = 200;
-            }
-            else if (dontDestroy.gameModeValue == 1)
-            {
-                maxScore = 1000;
-            }
-            else if (dontDestroy.gameModeValue == 2)
-            {
-                maxScore = 2000;
-            }
-        }
-        else if (dontDestroy.gameMode == "onTime")
-        {
-            if (dontDestroy.gameModeValue == 0)
-            {
-                maxTime = 30;
-            }
-            else if (dontDestroy.gameModeValue == 1)
-            {
-                maxTime = 60;
-            }
-            else if (dontDestroy.gameModeValue == 2)
-            {
-                maxTime = 300;
-            }
+            case "numOfShots":
+                switch (dontDestroy.gameModeValue)
+                {
+                    case 0:
+                        maxShots = 10;
+                        break;
+                    case 1:
+                        maxShots = 20;
+                        break;
+                    case 2:
+                        maxShots = 50;
+                        break;
+                }
+                break;
+            case "numOfPoints":
+                switch (dontDestroy.gameModeValue)
+                {
+                    case 0:
+                        maxScore = 200;
+                        break;
+                    case 1:
+                        maxScore = 1000;
+                        break;
+                    case 2:
+                        maxScore = 2000;
+                        break;
+                }
+                break;
+            case "onTime":
+                switch (dontDestroy.gameModeValue)
+                {
+                    case 0:
+                        maxTime = 30;
+                        break;
+                    case 1:
+                        maxTime = 60;
+                        break;
+                    case 2:
+                        maxTime = 300;
+                        break;
+                }
+                break;
         }
     }
 

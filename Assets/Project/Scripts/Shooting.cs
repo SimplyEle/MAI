@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Shooting : MonoBehaviour
 {
     private SpawnTargets spawnTargets;
+    private int shots;
 
     void Start()
     {
@@ -16,6 +18,7 @@ public class Shooting : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            shots++;
             Debug.Log("bang!");
             RaycastHit hit;
             if (Physics.Raycast(
@@ -64,5 +67,15 @@ public class Shooting : MonoBehaviour
                 } 
             }            
         }
+    }
+
+    public int GetShots()
+    {
+        return shots;
+    }
+
+    public void SetZeroShots()
+    {
+        shots = 0;
     }
 }

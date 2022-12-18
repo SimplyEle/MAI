@@ -12,7 +12,12 @@ public class UIManager : MonoBehaviour
     public RectTransform PointsPanel;
     public RectTransform ShootsPanel;
 
-    private GameModes gameModes;
+    private DontDestroy gameModes;
+
+    private void Start()
+    {
+        gameModes = GameObject.Find("ObjectDontDestroy").GetComponent<DontDestroy>();
+    }
 
     public void StartGame()
     {

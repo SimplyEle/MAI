@@ -65,7 +65,7 @@ public class SpawnTargets : MonoBehaviour
         return pos;
     }
 
-    void GenerateTempPosition(double startPos, List<double> positions, ref List<double> res)
+    private void GenerateTempPosition(double startPos, List<double> positions, ref List<double> res)
     {
         double tempPos;
         System.Random rnd = new();
@@ -143,7 +143,7 @@ public class SpawnTargets : MonoBehaviour
     {
         if (gameObj == null)
         {
-            return; 
+            return;
         }
         
         FormListPositionsOnTheScreen(out firstLinePositions, out secondLinePositions, out thirdLinePositions);
@@ -192,6 +192,10 @@ public class SpawnTargets : MonoBehaviour
         {
             if (numOfClonesFirstLine != startFirstLinePositions)
             {
+                if (firstLinePositions.Count == 0)
+                {
+                    firstLinePositions.Add(GenerateStartRandomPosition(targetPositionsFirstLine));
+                }
                 int check = firstLinePositions.Count;
                 for (int i = 0; i < 100; i++)
                 {
@@ -208,6 +212,10 @@ public class SpawnTargets : MonoBehaviour
             }
             if (numOfClonesSecondLine != startSecondLinePositions)
             {
+                if (secondLinePositions.Count == 0)
+                {
+                    secondLinePositions.Add(GenerateStartRandomPosition(targetPositionsSecondLine));
+                }
                 int check = secondLinePositions.Count;
                 for (int i = 0; i < 100; i++)
                 {
@@ -224,6 +232,10 @@ public class SpawnTargets : MonoBehaviour
             }
             if (numOfClonesThirdLine != startThirdLinePositions)
             {
+                if (thirdLinePositions.Count == 0)
+                {
+                    thirdLinePositions.Add(GenerateStartRandomPosition(targetPositionsThirdLine));
+                }
                 int check = thirdLinePositions.Count;
                 for (int i = 0; i < 100; i++)
                 {

@@ -24,4 +24,10 @@ public class Score : MonoBehaviour
     {
         return score;
     }
+
+    public void SetZeroScore()
+    {
+        score = 0;
+        scoreText.text = score.ToString();
+    }
 }

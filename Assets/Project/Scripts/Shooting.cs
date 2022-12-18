@@ -8,6 +8,8 @@ public class Shooting : MonoBehaviour
     private SpawnTargets spawnTargets;
     private int shots;
 
+    public AudioSource shotSound;
+
     private void Start()
     {
         spawnTargets = GameObject.Find("GameManager").GetComponent<SpawnTargets>();
@@ -18,6 +20,12 @@ public class Shooting : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             shots++;
+            shotSound.Play();
+            if (shotSound.isPlaying)
+            {
+                shotSound.Stop();
+                shotSound.Play();
+            }
             RaycastHit hit;
             if (Physics.Raycast(
                     Camera.main.transform.position,

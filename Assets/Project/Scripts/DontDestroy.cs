@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class DontDestroy : MonoBehaviour
 {
-    public string gameMode;
+    public GameMode gameMode;
     public int gameModeValue;
+    
 
     private void Start()
     {

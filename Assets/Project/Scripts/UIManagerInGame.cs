@@ -8,6 +8,9 @@ using StarterAssets;
 public class UIManagerInGame : MonoBehaviour
 {
     private DontDestroy dontDestroy;
+    private GameModes gameModes;
+    private FirstPersonController firstPersonController;
+    private Score score;
 
     private bool isPause;
 
@@ -20,13 +23,16 @@ public class UIManagerInGame : MonoBehaviour
     {
         isPause = false;
         dontDestroy = GameObject.Find("ObjectDontDestroy").GetComponent<DontDestroy>();
+        gameModes = GameObject.Find("GameManager").GetComponent<GameModes>();
+        firstPersonController = GameObject.Find("PlayerCapsule").GetComponent<FirstPersonController>();
+        score = GameObject.Find("GameManager").GetComponent<Score>();
 
-        if (GameObject.Find("PlayerCapsule").GetComponent<FirstPersonController>().enabled == false)
+        if (firstPersonController.enabled == false)
         {
-            GameObject.Find("PlayerCapsule").GetComponent<FirstPersonController>().enabled = true;
+            firstPersonController.enabled = true;
         }
 
-        if (dontDestroy.gameMode == "numOfPoints" || dontDestroy.gameMode == "numOfShots")
+        if (gameModes.GetNumOfPointsList().Contains(dontDestroy.gameMode) || gameModes.GetNumOfShotsList().Contains(dontDestroy.gameMode))
         {
             GameObject.Find("TimerText").SetActive(false);
         }
@@ -42,8 +48,8 @@ public class UIManagerInGame : MonoBehaviour
 
     public void GameOver()
     {
-        GameObject.Find("PlayerCapsule").GetComponent<FirstPersonController>().enabled = false;
-        textScoreResult.text = "Score: " + GameObject.Find("GameManager").GetComponent<Score>().GetScore();
+        firstPersonController.enabled = false;
+        textScoreResult.text = "Score: " + score.GetScore();
         inGameOverlay.gameObject.SetActive(false);
         gameOverPanel.gameObject.SetActive(true);
         Cursor.visible = true;
@@ -58,11 +64,11 @@ public class UIManagerInGame : MonoBehaviour
             escPanel.gameObject.SetActive(true);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
-            GameObject.Find("PlayerCapsule").GetComponent<FirstPersonController>().enabled = false;
+            firstPersonController.enabled = false;
         }
         else
         {
-            GameObject.Find("PlayerCapsule").GetComponent<FirstPersonController>().enabled = true;
+            firstPersonController.enabled = true;
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             escPanel.gameObject.SetActive(false);
@@ -91,31 +97,65 @@ public class UIManagerInGame : MonoBehaviour
         }
         else
         {
-            GameObject.Find("PlayerCapsule").GetComponent<FirstPersonController>().enabled = true;
+            firstPersonController.enabled = true;
         }
 
-        switch (dontDestroy.gameMode)
-        {
-            case "onTime":
-                GameObject.Find("AssaultRIfle_02").GetComponent<Shooting>().SetZeroShots();
-                GameObject.Find("GameManager").GetComponent<Timer>().RestartTimer();
-                break;
-            case "numOfPoints":
-                GameObject.Find("AssaultRIfle_02").GetComponent<Shooting>().SetZeroShots();
-                GameObject.Find("GameManager").GetComponent<Score>().SetZeroScore();
-                break;
-            case "numOfShots":
-                GameObject.Find("GameManager").GetComponent<Score>().SetZeroScore();
-                GameObject.Find("AssaultRIfle_02").GetComponent<Shooting>().SetZeroShots();
-                break;
-        }
+        SetZeroAll();
 
         if (gameOverPanel.gameObject.activeInHierarchy)
         {
             gameOverPanel.gameObject.SetActive(false);
         }
 
+        inGameOverlay.gameObject.SetActive(true);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    private void SetZeroAll()
+    {
+        switch (dontDestroy.gameMode)
+        {
+            case GameMode.OnTimeFastest:
+                SetZeroScoreShotsTime();
+                break;
+            case GameMode.OnTimeNormal:
+                SetZeroScoreShotsTime();
+                break;
+            case GameMode.OnTimeSlowest:
+                SetZeroScoreShotsTime();
+                break;
+            case GameMode.NumOfPointsFew:
+                SetZeroScoreShots();
+                break;
+            case GameMode.NumOfPointsMedium:
+                SetZeroScoreShots();
+                break;
+            case GameMode.NumOfPointsMany:
+                SetZeroScoreShots();
+                break;
+            case GameMode.NumOfShotsFew:
+                SetZeroScoreShots();
+                break;
+            case GameMode.NumOfShotsMedium:
+                SetZeroScoreShots();
+                break;
+            case GameMode.NumOfShotsMany:
+                SetZeroScoreShots();
+                break;
+        }
+    }
+
+    private void SetZeroScoreShots()
+    {
+        GameObject.Find("GameManager").GetComponent<Score>().SetZeroScore();
+        GameObject.Find("AssaultRIfle_02").GetComponent<Shooting>().SetZeroShots();
+    }
+
+    private void SetZeroScoreShotsTime()
+    {
+        GameObject.Find("AssaultRIfle_02").GetComponent<Shooting>().SetZeroShots();
+        GameObject.Find("GameManager").GetComponent<Score>().SetZeroScore();
+        GameObject.Find("GameManager").GetComponent<Timer>().RestartTimer();
     }
 }

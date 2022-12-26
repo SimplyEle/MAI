@@ -34,21 +34,40 @@ public class UIManager : MonoBehaviour
         gameModesPanel.gameObject.SetActive(true);
     }
 
-    public void SetGameModeOnTime()
+    public void SetGameModeOnTimeFastest()
     {
-        gameModes.gameMode = "onTime";
+        gameModes.gameMode = GameMode.OnTimeFastest;
     }
-    public void SetGameModeNumOfShots()
+    public void SetGameModeOnTimeNormal()
     {
-        gameModes.gameMode = "numOfShots";
+        gameModes.gameMode = GameMode.OnTimeNormal;
     }
-    public void SetGameModeNumOfPoints()
+    public void SetGameModeOnTimeSlowest()
     {
-        gameModes.gameMode = "numOfPoints";
+        gameModes.gameMode = GameMode.OnTimeSlowest;
     }
-
-    public void SetGameModeValue(int value)
+    public void SetGameModeNumOfShotsFew()
     {
-        gameModes.gameModeValue = value;
+        gameModes.gameMode = GameMode.NumOfShotsFew;
+    }
+    public void SetGameModeNumOfShotsMedium()
+    {
+        gameModes.gameMode = GameMode.NumOfShotsMedium;
+    }
+    public void SetGameModeNumOfShotsMany()
+    {
+        gameModes.gameMode = GameMode.NumOfShotsMany;
+    }
+    public void SetGameModeNumOfPointsFew()
+    {
+        gameModes.gameMode = GameMode.NumOfPointsFew;
+    }
+    public void SetGameModeNumOfPointsMedium()
+    {
+        gameModes.gameMode = GameMode.NumOfPointsMedium;
+    }
+    public void SetGameModeNumOfPointsMany()
+    {
+        gameModes.gameMode = GameMode.NumOfPointsMany;
     }
 }

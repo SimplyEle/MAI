@@ -163,71 +163,34 @@ public class SpawnTargets : MonoBehaviour
 
     private void FixedUpdate()
     {
-        numOfClonesFirstLine = GameObject.FindGameObjectsWithTag("Target1line").Count();
-        numOfClonesSecondLine = GameObject.FindGameObjectsWithTag("Target2line").Count();
-        numOfClonesThirdLine = GameObject.FindGameObjectsWithTag("Target3line").Count();
-
         if (countTargets < startCountTargets)
         {
-            if (numOfClonesFirstLine != startFirstLinePositions)
+            CheckingBeforeSpawn(numOfClonesFirstLine, startFirstLinePositions, firstLinePositions, targetPositionsFirstLine, "Target1line", 7.5f, 7.12f);
+            CheckingBeforeSpawn(numOfClonesSecondLine, startSecondLinePositions, secondLinePositions, targetPositionsSecondLine, "Target2line", 10f, 44.72f);
+            CheckingBeforeSpawn(numOfClonesThirdLine, startThirdLinePositions, thirdLinePositions, targetPositionsThirdLine, "Target3line", 17.12f, 80.16f);
+        }
+    }
+
+    private void CheckingBeforeSpawn(int numOfClonesOfLine, int startLinePositions, List<double> linePositions, List<double> tagetPositionsLine, string tag, float y, float z)
+    {
+        if (numOfClonesOfLine != startLinePositions)
+        {
+            if (linePositions.Count == 0)
             {
-                if (firstLinePositions.Count == 0)
+                linePositions.Add(GenerateStartRandomPosition(tagetPositionsLine));
+            }
+            int check = linePositions.Count;
+            for (int i = 0; i < 100; i++)
+            {
+                GenerateTempPosition(linePositions[0], tagetPositionsLine, ref linePositions);
+                if (linePositions.Count == 3)
                 {
-                    firstLinePositions.Add(GenerateStartRandomPosition(targetPositionsFirstLine));
-                }
-                int check = firstLinePositions.Count;
-                for (int i = 0; i < 100; i++)
-                {
-                    GenerateTempPosition(firstLinePositions[0], targetPositionsFirstLine, ref firstLinePositions);
-                    if (firstLinePositions.Count == 3)
-                    {
-                        break;
-                    }
-                }
-                if (firstLinePositions.Count != check)
-                {
-                    SpawnObject(target, "Target1line", firstLinePositions.Last(), 7.5f, 7.12f);
+                    break;
                 }
             }
-            if (numOfClonesSecondLine != startSecondLinePositions)
+            if (linePositions.Count != check)
             {
-                if (secondLinePositions.Count == 0)
-                {
-                    secondLinePositions.Add(GenerateStartRandomPosition(targetPositionsSecondLine));
-                }
-                int check = secondLinePositions.Count;
-                for (int i = 0; i < 100; i++)
-                {
-                    GenerateTempPosition(secondLinePositions[0], targetPositionsSecondLine, ref secondLinePositions);
-                    if (secondLinePositions.Count == 3)
-                    {
-                        break;
-                    }
-                }
-                if (secondLinePositions.Count != check)
-                {
-                    SpawnObject(target, "Target2line", secondLinePositions.Last(), 10f, 44.72f);
-                }
-            }
-            if (numOfClonesThirdLine != startThirdLinePositions)
-            {
-                if (thirdLinePositions.Count == 0)
-                {
-                    thirdLinePositions.Add(GenerateStartRandomPosition(targetPositionsThirdLine));
-                }
-                int check = thirdLinePositions.Count;
-                for (int i = 0; i < 100; i++)
-                {
-                    GenerateTempPosition(thirdLinePositions[0], targetPositionsThirdLine, ref thirdLinePositions);
-                    if (thirdLinePositions.Count == 3)
-                    {
-                        break;
-                    }
-                }
-                if (thirdLinePositions.Count != check)
-                {
-                    SpawnObject(target, "Target3line", thirdLinePositions.Last(), 17.12f, 80.16f);
-                }
+                SpawnObject(target, tag, linePositions.Last(), y, z);
             }
         }
     }
@@ -250,5 +213,12 @@ public class SpawnTargets : MonoBehaviour
     public List<double> GetThirdLinePositions()
     {
         return thirdLinePositions;
+    }
+
+    public void SetNumOfClonesLines()
+    {
+        numOfClonesFirstLine = GameObject.FindGameObjectsWithTag("Target1line").Count();
+        numOfClonesSecondLine = GameObject.FindGameObjectsWithTag("Target2line").Count();
+        numOfClonesThirdLine = GameObject.FindGameObjectsWithTag("Target3line").Count();
     }
 }

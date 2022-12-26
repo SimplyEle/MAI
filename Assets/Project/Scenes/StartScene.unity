@@ -1151,24 +1151,12 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1596232520}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: SetGameModeOnTime
+        m_MethodName: SetGameModeOnTimeSlowest
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1596232520}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: SetGameModeValue
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -2778,20 +2766,8 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1596232520}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: SetGameModeOnTime
+        m_MethodName: SetGameModeOnTimeFastest
         m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1596232520}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: SetGameModeValue
-        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2936,24 +2912,12 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1596232520}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: SetGameModeNumOfShots
+        m_MethodName: SetGameModeNumOfShotsMedium
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1596232520}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: SetGameModeValue
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -3265,20 +3229,8 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1596232520}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: SetGameModeNumOfPoints
+        m_MethodName: SetGameModeNumOfPointsFew
         m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1596232520}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: SetGameModeValue
-        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3775,24 +3727,12 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1596232520}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: SetGameModeNumOfPoints
+        m_MethodName: SetGameModeNumOfPointsMany
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1596232520}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: SetGameModeValue
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -4122,7 +4062,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dff96d1ed7582644bf11a47aefc6211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameMode: 
+  gameMode: 0
   gameModeValue: 0
 --- !u!4 &1844023918
 Transform:
@@ -4372,20 +4312,8 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1596232520}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: SetGameModeNumOfShots
+        m_MethodName: SetGameModeNumOfShotsFew
         m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1596232520}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: SetGameModeValue
-        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4665,24 +4593,12 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1596232520}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: SetGameModeNumOfShots
+        m_MethodName: SetGameModeNumOfShotsMany
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1596232520}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: SetGameModeValue
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -4823,24 +4739,12 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1596232520}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: SetGameModeOnTime
+        m_MethodName: SetGameModeOnTimeNormal
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1596232520}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: SetGameModeValue
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -4981,24 +4885,12 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1596232520}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: SetGameModeNumOfPoints
+        m_MethodName: SetGameModeNumOfPointsMedium
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1596232520}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: SetGameModeValue
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0

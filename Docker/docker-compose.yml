@@ -1,0 +1,95 @@
+version: '2.1'
+
+services:
+  conf-db-node:
+    build:
+      context: mariadb
+      dockerfile: Dockerfile
+    container_name: conf-db-node
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: cnfdb
+      MYSQL_USER: cnfuser
+      MYSQL_PASSWORD: cnfuser
+      MYSQL_ROOT_PASSWORD: '1'
+    command: >
+      --sql-mode='STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'
+      --general-log=ON
+      --log-queries-not-using-indexes=ON
+    networks:
+      - cnf-network
+    ports:
+      - 3360:3306
+    healthcheck:
+      test: "/usr/bin/mysql --user=cnfuser --password=cnfuser --execute \"SHOW DATABASES;\""
+      timeout: 20s
+      retries: 5
+    volumes:
+      - conf-db-node-data:/var/lib/mysql
+
+  user_service:
+    build:
+      context: UserService
+      dockerfile: Dockerfile
+    container_name: user_service
+    environment:
+      - DB_HOST=conf-db-node
+      - DB_PORT=3306
+      - DB_LOGIN=cnfuser
+      - DB_PASSWORD=cnfuser
+      - DB_DATABASE=cnfdb
+    ports:
+      - 8080:8080
+    networks:
+      - cnf-network
+    depends_on:
+      conf-db-node:
+        condition: service_healthy
+    
+  conference_service:
+    build:
+      context: ConferenceService
+      dockerfile: Dockerfile
+    container_name: conference_service
+    environment:
+      - SERVICE_HOST=user_service
+      - DB_HOST=conf-db-node
+      - DB_PORT=3306
+      - DB_LOGIN=cnfuser
+      - DB_PASSWORD=cnfuser
+      - DB_DATABASE=cnfdb
+    ports:
+      - 8081:8081
+    networks:
+      - cnf-network
+    depends_on:
+      user_service:
+        condition: service_started
+
+  report_service:
+    build:
+      context: ReportService
+      dockerfile: Dockerfile
+    container_name: report_service
+    environment:
+      - SERVICE_HOST=user_service
+      - DB_HOST=conf-db-node
+      - DB_PORT=3306
+      - DB_LOGIN=cnfuser
+      - DB_PASSWORD=cnfuser
+      - DB_DATABASE=cnfdb
+    ports:
+      - 8082:8082
+    networks:
+      - cnf-network
+    depends_on:
+      user_service:
+        condition: service_started
+
+volumes:
+  conf-db-node-data:
+
+networks:
+  cnf-network:
+    driver: "bridge"
+    external: false

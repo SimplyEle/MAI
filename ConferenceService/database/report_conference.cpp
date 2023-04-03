@@ -72,7 +72,7 @@ namespace database
         return reportconf;
     }
 
-    void Conference::add_report_to_conf(long report_id, long conf_id)
+    void ReportConference::add_report_to_conf(long report_id, long conf_id)
     {
         try
         {
@@ -103,14 +103,14 @@ namespace database
         }
     }
 
-    std::vector<Conference> read_all_reports_from_conf(long conf_id)
+    std::vector<ReportConference> read_all_reports_from_conf(long conf_id)
     {
         try
         {
             Poco::Data::Session session = database::Database::get().create_session();
             Statement select(session);
-            std::vector<Conference> result;
-            Conference a;
+            std::vector<ReportConference> result;
+            ReportConference a;
             select << "SELECT report_id, conf_id FROM ReportConference",
                 into(a.conf_id),
                 range(0, 1); //  iterate over result set one row at a time

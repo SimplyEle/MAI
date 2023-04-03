@@ -21,7 +21,7 @@ namespace database
 
             
             void add_report_to_conf(long report_id, long conf_id);
-            static std::vector<Conference> read_all_reports_from_conf(long conf_id);
+            std::vector<Conference> read_all_reports_from_conf(long conf_id);
 
             Poco::JSON::Object::Ptr toJSON() const;
 

@@ -103,7 +103,7 @@ namespace database
         }
     }
 
-    static std::vector<Conference> read_all_reports_from_conf(long conf_id)
+    std::vector<Conference> read_all_reports_from_conf(long conf_id)
     {
         try
         {

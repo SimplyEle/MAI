@@ -82,7 +82,7 @@ namespace database
         return conf;
     }
 
-    static std::vector<Conference> read_all_confs()
+    std::vector<Conference> read_all_confs()
     {
         try
         {

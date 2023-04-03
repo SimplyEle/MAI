@@ -230,7 +230,7 @@ public:
                 std::string date_creation = form.get("date_creation").c_str();
 
                 database::Report report;
-                report.update_by_id(name_report, author_id, annotation, text_report, date_creation);
+                report.update_by_id(report_id, name_report, author_id, annotation, text_report, date_creation);
 
                 response.setStatus(Poco::Net::HTTPResponse::HTTP_OK);
                 response.setChunkedTransferEncoding(true);
@@ -240,7 +240,7 @@ public:
             }
             if (hasSubstr(request.getURI(), "/search_report") &&
                 (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET)
-                form.has("report_id")&&)
+                form.has("report_id"))
             { 
                 long report_id = atol(form.get("report_id").c_str());
                 database::Report report;

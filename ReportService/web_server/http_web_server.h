@@ -67,7 +67,7 @@ protected:
     {
         if (!_helpRequested)
         {
-            database::User::init();
+            database::Report::init();
             ServerSocket svs(Poco::Net::SocketAddress("0.0.0.0", 8080));
             HTTPServer srv(new HTTPRequestFactory(DateTimeFormat::SORTABLE_FORMAT), svs, new HTTPServerParams);
             srv.start();

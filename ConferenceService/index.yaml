@@ -234,4 +234,4 @@ components:
             type: http
             scheme: basic
 security:
-    - basicA
+    - basicAuth: []

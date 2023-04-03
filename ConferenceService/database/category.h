@@ -1,5 +1,5 @@
-#ifndef AUTHOR_H
-#define AUTHOR_H
+#ifndef CATEGORY_H
+#define CATEGORY_H
 
 #include <string>
 #include <vector>

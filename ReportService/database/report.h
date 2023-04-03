@@ -1,5 +1,5 @@
-#ifndef AUTHOR_H
-#define AUTHOR_H
+#ifndef REPORT_H
+#define REPORT_H
 
 #include <string>
 #include <vector>

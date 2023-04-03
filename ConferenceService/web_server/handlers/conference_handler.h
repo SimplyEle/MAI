@@ -122,6 +122,13 @@ public:
                        HTTPServerResponse &response)
     {
         HTMLForm form(request, request.stream());
+        long cur_user_id = TryAuth(request, response);
+
+        if(cur_user_id == 0){
+            //No Auth
+            return;
+        }
+        
         try
         {/*
             if (form.has("id") && (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET))
@@ -196,8 +203,6 @@ public:
             {               
                 std::string name_of_category = form.get("name_of_category").c_str();
 
-                long author_id = cur_user_id;
-
                 database::Category result = database::Category::add_category(name_of_category);
 
                 response.setStatus(Poco::Net::HTTPResponse::HTTP_OK);
@@ -235,7 +240,6 @@ public:
                 form.has("report_id") &&
                 form.has("conf_id"))
             {
-                long user_id = cur_user_id;
                 long report_id = atol(form.get("report_id").c_str());
                 long conf_id = atol(form.get("conf_id").c_str());
 
@@ -249,9 +253,7 @@ public:
             }
             else if (hasSubstr(request.getURI(), "/read_all_confs") &&
                     (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET))
-            {
-                long user_id = cur_user_id;
-                
+            {                
                 auto results = database::Conference::read_all_confs();
 
                 Poco::JSON::Array arr;
@@ -269,7 +271,6 @@ public:
                     (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET)&&
                     form.has("conf_id"))
             {
-                long user_id = cur_user_id;
                 long conf_id = atol(form.get("conf_id").c_str());
 
                 auto results = database::ReportConference::read_all_reports_from_conf(conf_id);

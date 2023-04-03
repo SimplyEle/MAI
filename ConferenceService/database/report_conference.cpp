@@ -85,10 +85,6 @@ namespace database
 
             insert.execute();
 
-            if (!select.done())
-            {
-                select.execute();
-            }
             std::cout << "inserted: " << _report_id << " & " << _conf_id << std::endl;
         }
         catch (Poco::Data::MySQL::ConnectionException &e)
@@ -111,8 +107,9 @@ namespace database
             Statement select(session);
             std::vector<ReportConference> result;
             ReportConference a;
-            select << "SELECT report_id, conf_id FROM ReportConference",
-                into(a.conf_id),
+            select << "SELECT report_id, conf_id FROM ReportConference where conf_id=?",
+                into(a._report_id),
+                use(conf_id),
                 range(0, 1); //  iterate over result set one row at a time
 
             while (!select.done())

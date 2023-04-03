@@ -99,7 +99,7 @@ namespace database
         }
     }
 
-    std::vector<ReportConference> read_all_reports_from_conf(long conf_id)
+    std::vector<ReportConference> ReportConference::read_all_reports_from_conf(long conf_id)
     {
         try
         {

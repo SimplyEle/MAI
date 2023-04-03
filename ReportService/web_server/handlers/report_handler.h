@@ -239,7 +239,7 @@ public:
                 return;
             }
             if (hasSubstr(request.getURI(), "/search_report") &&
-                (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET)
+                (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET)&&
                 form.has("report_id"))
             { 
                 long report_id = atol(form.get("report_id").c_str());

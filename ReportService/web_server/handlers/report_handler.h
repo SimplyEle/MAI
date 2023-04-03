@@ -202,7 +202,8 @@ public:
                 std::string text_report = form.get("text_report").c_str();
                 std::string date_creation = form.get("date_creation").c_str();
 
-                database::Report result = database::Report::add_report(name_report, author_id, annotation, text_report, date_creation);
+                database::Report result;
+                result = result.add_report(name_report, author_id, annotation, text_report, date_creation);
 
                 response.setStatus(Poco::Net::HTTPResponse::HTTP_OK);
                 response.setChunkedTransferEncoding(true);
@@ -228,7 +229,8 @@ public:
                 std::string text_report = form.get("text_report").c_str();
                 std::string date_creation = form.get("date_creation").c_str();
 
-                database::Report::update_by_id(name_report, author_id, annotation, text_report, date_creation);
+                database::Report report;
+                report.update_by_id(name_report, author_id, annotation, text_report, date_creation);
 
                 response.setStatus(Poco::Net::HTTPResponse::HTTP_OK);
                 response.setChunkedTransferEncoding(true);

@@ -197,8 +197,8 @@ public:
             {               
                 std::string name_of_category = form.get("name_of_category").c_str();
 
-                database::Category category;
-                category.add_category(name_of_category);
+                database::Category result;
+                result = result.add_category(name_of_category);
 
                 response.setStatus(Poco::Net::HTTPResponse::HTTP_OK);
                 response.setChunkedTransferEncoding(true);
@@ -221,8 +221,9 @@ public:
                 long category_id = atol(form.get("category_id").c_str());
                 std::string description = form.get("description").c_str();
                 std::string date_of_conf = form.get("date_of_conf").c_str();
-
-                database::Conference::add_conf(name_conf, organizer_id, category_id, description, date_of_conf);
+		
+		database::Conference conf;
+                conf.add_conf(name_conf, organizer_id, category_id, description, date_of_conf);
 
                 response.setStatus(Poco::Net::HTTPResponse::HTTP_OK);
                 response.setChunkedTransferEncoding(true);
@@ -238,7 +239,8 @@ public:
                 long report_id = atol(form.get("report_id").c_str());
                 long conf_id = atol(form.get("conf_id").c_str());
 
-                database::ReportConference::add_report_to_conf(report_id, conf_id);
+		database::ReportConference reportconf;
+                reportconf.add_report_to_conf(report_id, conf_id);
 
                 response.setStatus(Poco::Net::HTTPResponse::HTTP_OK);
                 response.setChunkedTransferEncoding(true);

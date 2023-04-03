@@ -89,18 +89,17 @@ namespace database
         {
             Poco::Data::Session session = database::Database::get().create_session();
             Poco::Data::Statement update(session);
-            Report a;
             update << "UPDATE id, name_report, author_id, annotation, text_report, date_creation FROM Report where id=?",
-                use(a.id),
-                use(a.name_report),
-                use(a.author_id),
-                use(a.annotation),
-                use(a.text_report),
-                use(a.date_creation)
+                use(id),
+                use(name_report),
+                use(author_id),
+                use(annotation),
+                use(text_report),
+                use(date_creation)
 
             update.execute();
 
-            std::cout << "updated:" << _id << std::endl;
+            std::cout << "updated:" << id << std::endl;
         }
 
         catch (Poco::Data::MySQL::ConnectionException &e)
@@ -114,7 +113,7 @@ namespace database
         return {};
     }
 
-    std::optional<Report> Report::search_report(long id)
+    std::vector<Report> Report::search_report(long id)
     {
         try
         {

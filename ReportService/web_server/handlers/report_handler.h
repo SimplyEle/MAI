@@ -243,8 +243,8 @@ public:
                 form.has("report_id")&&)
             { 
                 long report_id = atol(form.get("report_id").c_str());
-
-                auto results = database::Report::search_report(report_id);
+                database::Report report;
+                auto results = report.search_report(report_id);
 
                 Poco::JSON::Array arr;
                 for (auto s : results)

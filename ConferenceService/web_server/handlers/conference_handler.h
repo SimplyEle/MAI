@@ -222,7 +222,7 @@ public:
                 std::string description = form.get("description").c_str();
                 std::string date_of_conf = form.get("date_of_conf").c_str();
 		
-		database::Conference conf;
+		        database::Conference conf;
                 conf.add_conf(name_conf, organizer_id, category_id, description, date_of_conf);
 
                 response.setStatus(Poco::Net::HTTPResponse::HTTP_OK);
@@ -239,7 +239,7 @@ public:
                 long report_id = atol(form.get("report_id").c_str());
                 long conf_id = atol(form.get("conf_id").c_str());
 
-		database::ReportConference reportconf;
+		        database::ReportConference reportconf;
                 reportconf.add_report_to_conf(report_id, conf_id);
 
                 response.setStatus(Poco::Net::HTTPResponse::HTTP_OK);
@@ -251,7 +251,8 @@ public:
             else if (hasSubstr(request.getURI(), "/read_all_confs") &&
                     (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET))
             {                
-                auto results = database::Conference::read_all_confs();
+                database::ReportConference reportconf;
+                auto results = reportconf.read_all_confs();
 
                 Poco::JSON::Array arr;
                 for (auto s : results)
@@ -270,7 +271,8 @@ public:
             {
                 long conf_id = atol(form.get("conf_id").c_str());
 
-                auto results = database::ReportConference::read_all_reports_from_conf(conf_id);
+                database::ReportConference reportconf;
+                auto results = reportconf.read_all_reports_from_conf(conf_id);
 
                 Poco::JSON::Array arr;
                 for (auto s : results)

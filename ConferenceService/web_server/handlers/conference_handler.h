@@ -251,7 +251,7 @@ public:
             else if (hasSubstr(request.getURI(), "/read_all_confs") &&
                     (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET))
             {                
-                database::ReportConference reportconf;
+                database::Conference reportconf;
                 auto results = reportconf.read_all_confs();
 
                 Poco::JSON::Array arr;

@@ -26,7 +26,7 @@ namespace database
 
             Poco::Data::Session session = database::Database::get().create_session();
             Statement create_stmt(session);
-            create_stmt << "CREATE TABLE `Report`(`id int NOT NULL AUTO_INCREMENT,"
+            create_stmt << "CREATE TABLE IF NOT EXISTS `Report`(`id` int NOT NULL AUTO_INCREMENT,"
                         << "`name_report`   text NOT NULL ,"
                         << "`author_id`     int NOT NULL ,"
                         << "`annotation`    text NOT NULL ,"

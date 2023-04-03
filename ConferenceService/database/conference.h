@@ -18,7 +18,7 @@ namespace database
             std::string _date_of_conf;
 
         public:
-
+            static void init();
             static Conference fromJSON(const std::string & str);
 
             long &id();
@@ -28,7 +28,6 @@ namespace database
             std::string &description();
             std::string &date_of_conf();
 
-            static void init();
             static std::vector<Conference> read_all_confs();
             void add_conf(std::string name_conf, long organizer_id, long category_id, std::string description, std::string date_of_conf);
 

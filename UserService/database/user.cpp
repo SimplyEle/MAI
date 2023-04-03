@@ -112,6 +112,7 @@ namespace database
         }
         return {};
     }
+    
     std::optional<User> User::read_by_id(long id)
     {
         try

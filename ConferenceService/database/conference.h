@@ -12,8 +12,8 @@ namespace database
         private:
             long _id;
             std::string _name_conf;
-            int _organizer_id;
-            int _category_id;
+            long _organizer_id;
+            long _category_id;
             std::string _description;
             std::string _date_of_conf;
 

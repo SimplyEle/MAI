@@ -74,11 +74,11 @@ namespace database
         Poco::JSON::Object::Ptr object = result.extract<Poco::JSON::Object::Ptr>();
 
         report.id() = object->getValue<long>("id");
-        report.first_name() = object->getValue<std::string>("name_report");
-        report.last_name() = object->getValue<long>("author_id");
-        report.email() = object->getValue<std::string>("annotation");
-        report.title() = object->getValue<std::string>("text_report");
-        report.login() = object->getValue<std::string>("date_creation");
+        report.name_report() = object->getValue<std::string>("name_report");
+        report.author_id() = object->getValue<long>("author_id");
+        report.annotation() = object->getValue<std::string>("annotation");
+        report.text_report() = object->getValue<std::string>("text_report");
+        report.date_creation() = object->getValue<std::string>("date_creation");
 
         return report;
     }
@@ -95,7 +95,7 @@ namespace database
                 use(author_id),
                 use(annotation),
                 use(text_report),
-                use(date_creation)
+                use(date_creation);
 
             update.execute();
 
@@ -119,6 +119,7 @@ namespace database
         {
             Poco::Data::Session session = database::Database::get().create_session();
             Poco::Data::Statement select(session);
+            std::vector<Report> result;
             Report a;
             select << "SELECT id, name_report, author_id, annotation, text_report, date_creation FROM Report where id=?",
                 into(a._id),
@@ -130,9 +131,12 @@ namespace database
                 use(id),
                 range(0, 1); //  iterate over result set one row at a time
 
-            select.execute();
-            Poco::Data::RecordSet rs(select);
-            if (rs.moveFirst()) return a;
+            while (!select.done())
+            {
+                if (select.execute())
+                    result.push_back(a);
+            }
+            return result;
         }
 
         catch (Poco::Data::MySQL::ConnectionException &e)

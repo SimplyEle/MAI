@@ -122,12 +122,6 @@ public:
                        HTTPServerResponse &response)
     {
         HTMLForm form(request, request.stream());
-        long cur_user_id = TryAuth(request, response);
-
-        if(cur_user_id == 0){
-            //No Auth
-            return;
-        }
         
         try
         {/*
@@ -203,7 +197,8 @@ public:
             {               
                 std::string name_of_category = form.get("name_of_category").c_str();
 
-                database::Category result = database::Category::add_category(name_of_category);
+                database::Category category;
+                category.add_category(name_of_category);
 
                 response.setStatus(Poco::Net::HTTPResponse::HTTP_OK);
                 response.setChunkedTransferEncoding(true);

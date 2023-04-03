@@ -97,7 +97,7 @@ namespace database
         }
     }
 
-    long &Category::_id()
+    long &Category::id()
     {
         return _id;
     }

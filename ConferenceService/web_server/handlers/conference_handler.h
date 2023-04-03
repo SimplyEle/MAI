@@ -198,7 +198,7 @@ public:
                 std::string name_of_category = form.get("name_of_category").c_str();
 
                 database::Category result;
-                result = result.add_category(name_of_category);
+                result.add_category(name_of_category);
 
                 response.setStatus(Poco::Net::HTTPResponse::HTTP_OK);
                 response.setChunkedTransferEncoding(true);

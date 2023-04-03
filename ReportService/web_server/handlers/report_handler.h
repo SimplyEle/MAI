@@ -203,7 +203,7 @@ public:
                 std::string date_creation = form.get("date_creation").c_str();
 
                 database::Report result;
-                result = result.add_report(name_report, author_id, annotation, text_report, date_creation);
+                result.add_report(name_report, author_id, annotation, text_report, date_creation);
 
                 response.setStatus(Poco::Net::HTTPResponse::HTTP_OK);
                 response.setChunkedTransferEncoding(true);

@@ -16,7 +16,6 @@ services:
       --sql-mode='STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'
       --general-log=ON
       --log-queries-not-using-indexes=ON
-      --default-authentication-plugin=mysql_native_password
     networks:
       - cnf-network
     ports:

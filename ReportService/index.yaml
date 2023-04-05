@@ -4,7 +4,7 @@ info:
     title: "API ReportService"
     description: API для работы с докладами
 servers:
-    - url: http://localhost:8081
+    - url: http://localhost:8082
       description: Report server
 paths:
     /add_report:
@@ -65,7 +65,7 @@ paths:
         get:
             summary: Обновить доклад
             parameters:
-                - id: report_id
+                - name: report_id
                   description: идентификатор
                   in: query
                   required: true
@@ -125,7 +125,7 @@ paths:
         get:
             summary: Поиск доклада
             parameters:
-            - id: report_id
+            - name: report_id
               description: идентификатор доклада
               in: query
               required: true

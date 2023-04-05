@@ -30,7 +30,7 @@ namespace database
                         << "`organizer_id` int NOT NULL,"
                         << "`category_id`  int NOT NULL,"
                         << "`description`  text NOT NULL,"
-                        << "`date_of_conf` date NOT NULL,"
+                        << "`date_of_conf` text NOT NULL,"
 
                         << "PRIMARY KEY (`id`),"
                         << "KEY `FK_2` (`category_id`),"

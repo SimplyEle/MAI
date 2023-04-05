@@ -31,7 +31,7 @@ namespace database
                         << "`author_id`     int NOT NULL ,"
                         << "`annotation`    text NOT NULL ,"
                         << "`text_report`   text NOT NULL ,"
-                        << "`date_creation` date NOT NULL ,"
+                        << "`date_creation` text NOT NULL ,"
 
                         << "PRIMARY KEY (`id`),"
                         << "KEY `FK_2` (`author_id`),"

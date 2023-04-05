@@ -2,9 +2,6 @@ CMakeFiles/*
 .vscode/*
 build/*
 
-# Prerequisites
-*.d
-
 # Compiled Object files
 *.slo
 *.lo

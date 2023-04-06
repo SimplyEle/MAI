@@ -246,7 +246,7 @@ public:
                 response.setChunkedTransferEncoding(true);
                 response.setContentType("application/json");
                 std::ostream &ostr = response.send();
-                Poco::JSON::Stringifier::stringify(result.toJSON(), ostr);
+                Poco::JSON::Stringifier::stringify(reportconf.toJSON(), ostr);
                 return;
             }
             else if (hasSubstr(request.getURI(), "/read_all_confs") &&

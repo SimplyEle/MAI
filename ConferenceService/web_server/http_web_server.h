@@ -72,7 +72,7 @@ protected:
             database::Category::init();
             database::Conference::init();
             database::ReportConference::init();
-            ServerSocket svs(Poco::Net::SocketAddress("0.0.0.0", 8080));
+            ServerSocket svs(Poco::Net::SocketAddress("0.0.0.0", 8081));
             HTTPServer srv(new HTTPRequestFactory(DateTimeFormat::SORTABLE_FORMAT), svs, new HTTPServerParams);
             srv.start();
             waitForTerminationRequest();

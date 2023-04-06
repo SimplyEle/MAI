@@ -244,16 +244,13 @@ public:
             { 
                 long report_id = atol(form.get("report_id").c_str());
                 database::Report report;
-                auto results = report.search_report(report_id);
+                std::optional<Report> result = report.search_report(report_id);
 
-                Poco::JSON::Array arr;
-                for (auto s : results)
-                    arr.add(s.toJSON());
                 response.setStatus(Poco::Net::HTTPResponse::HTTP_OK);
                 response.setChunkedTransferEncoding(true);
                 response.setContentType("application/json");
                 std::ostream &ostr = response.send();
-                Poco::JSON::Stringifier::stringify(arr, ostr);
+                Poco::JSON::Stringifier::stringify(result->toJSON(), ostr);
                 return;
             }
         }

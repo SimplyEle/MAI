@@ -244,7 +244,7 @@ public:
             { 
                 long report_id = atol(form.get("report_id").c_str());
                 database::Report report;
-                std::optional<Report> result = report.search_report(report_id);
+                std::optional<database::Report> result = report.search_report(report_id);
 
                 response.setStatus(Poco::Net::HTTPResponse::HTTP_OK);
                 response.setChunkedTransferEncoding(true);

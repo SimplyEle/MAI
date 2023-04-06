@@ -93,6 +93,13 @@ paths:
 
     /read_all_reports_from_conf:
         get:
+            parameters:
+                - name: conf_id
+                  description: Идентификатор конференции
+                  in: query
+                  required: true
+                  schema:
+                      type: integer
             summary: Получить список всех докладов конференции
             responses:
                 "200":

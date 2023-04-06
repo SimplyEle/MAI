@@ -11,12 +11,6 @@ paths:
         post:
             summary: Добавление категории
             parameters:
-                - name: category_id
-                  description: Уникальный идентификатор категории
-                  in: query
-                  required: true
-                  schema:
-                      type: integer
                 - name: name_of_category
                   description: Название категории
                   in: query
@@ -47,14 +41,32 @@ paths:
         post:
             summary: Добавление конференции
             parameters:
-                - name: conf_id
-                  description: Уникальный идентификатор конференции
+                - name: name_conf
+                  description: Название конференции
+                  in: query
+                  required: true
+                  schema:
+                      type: string
+                - name: organizer_id
+                  description: Организатор конференции
                   in: query
                   required: true
                   schema:
                       type: integer
-                - name: name_conf
-                  description: Название конференции
+                - name: category_id
+                  description: Категория конференции
+                  in: query
+                  required: true
+                  schema:
+                      type: integer
+                - name: description
+                  description: Описание конференции
+                  in: query
+                  required: true
+                  schema:
+                      type: string
+                - name: date_of_conf
+                  description: Дата конференции
                   in: query
                   required: true
                   schema:
@@ -62,6 +74,10 @@ paths:
             responses:
                 "200":
                     description: The conference was added
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/conference"
                 404:
                     description: Error with conference adding
                     content:
@@ -108,12 +124,12 @@ paths:
                   required: true
                   schema:
                       type: integer
-                - name: name_conf
-                  description: Название конференции
+                - name: conf_id
+                  description: Уникальный идентификатор конференции
                   in: query
                   required: true
                   schema:
-                      type: string
+                      type: integer
             responses:
                 "200":
                     description: The report was added

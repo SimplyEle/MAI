@@ -245,7 +245,8 @@ public:
                 response.setStatus(Poco::Net::HTTPResponse::HTTP_OK);
                 response.setChunkedTransferEncoding(true);
                 response.setContentType("application/json");
-                response.send();
+                std::ostream &ostr = response.send();
+                Poco::JSON::Stringifier::stringify(result.toJSON(), ostr);
                 return;
             }
             else if (hasSubstr(request.getURI(), "/read_all_confs") &&
@@ -298,7 +299,7 @@ public:
         root->set("title", "Internal exception");
         root->set("status", Poco::Net::HTTPResponse::HTTPStatus::HTTP_NOT_FOUND);
         root->set("detail", "request ot found");
-        root->set("instance", "/user");
+        root->set("instance", "/conference");
         std::ostream &ostr = response.send();
         Poco::JSON::Stringifier::stringify(root, ostr);
     }

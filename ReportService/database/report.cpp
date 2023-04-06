@@ -113,13 +113,12 @@ namespace database
         return {};
     }
 
-    std::vector<Report> Report::search_report(long id)
+    std::optional<Report> Report::search_report(long id)
     {
         try
         {
             Poco::Data::Session session = database::Database::get().create_session();
             Poco::Data::Statement select(session);
-            std::vector<Report> result;
             Report a;
             select << "SELECT id, name_report, author_id, annotation, text_report, date_creation FROM Report where id=?",
                 into(a._id),
@@ -130,13 +129,10 @@ namespace database
                 into(a._date_creation),
                 use(id),
                 range(0, 1); //  iterate over result set one row at a time
-
-            while (!select.done())
-            {
-                if (select.execute())
-                    result.push_back(a);
-            }
-            return result;
+ 
+            select.execute();
+            Poco::Data::RecordSet rs(select);
+            if (rs.moveFirst()) return a;
         }
 
         catch (Poco::Data::MySQL::ConnectionException &e)

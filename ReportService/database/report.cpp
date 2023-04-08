@@ -98,7 +98,7 @@ namespace database
                 into(a._annotation),
                 into(a._text_report),
                 into(a._date_creation),
-                range(0, 1); //  iterate over result set one row at a time
+                now;
 
             while (!select.done())
             {

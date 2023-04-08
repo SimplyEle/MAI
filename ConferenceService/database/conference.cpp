@@ -88,7 +88,7 @@ namespace database
         try
         {
             Poco::Data::Session session = database::Database::get().create_session();
-            Poco::Data::Statement select(session);
+            Statement select(session);
             std::vector<Conference> result;
             Conference a;
             select << "SELECT id, name_conf, organizer_id, category_id, description, date_of_conf FROM Conference",

@@ -28,6 +28,7 @@ namespace database
             std::string &date_creation();
 
             static void init();
+            std::vector<Report> read_all_reports();
             std::optional<Report> search_report(long id);
             void add_report(std::string name_report, long author_id, std::string annotation, std::string text_report, std::string date_creation);
 

@@ -28,7 +28,6 @@ namespace database
             std::string &date_creation();
 
             static void init();
-            std::optional<Report> update_by_id(long id, std::string name_report, long author_id, std::string annotation, std::string text_report, std::string date_creation);
             std::optional<Report> search_report(long id);
             void add_report(std::string name_report, long author_id, std::string annotation, std::string text_report, std::string date_creation);
 

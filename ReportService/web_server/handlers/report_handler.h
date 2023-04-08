@@ -212,32 +212,6 @@ public:
                 Poco::JSON::Stringifier::stringify(result.toJSON(), ostr);
                 return;
             }
-            
-            else if (hasSubstr(request.getURI(), "/update_by_id") &&
-                (request.getMethod() == Poco::Net::HTTPRequest::HTTP_POST)&&
-                form.has("report_id")&&
-                form.has("name_report")&&
-                form.has("author_id")&&
-                form.has("annotation")&&
-                form.has("text_report")&&
-                form.has("date_creation"))
-            {
-                long report_id = atol(form.get("report_id").c_str());
-                std::string name_report = form.get("name_report").c_str();
-                long author_id = atol(form.get("author_id").c_str());
-                std::string annotation = form.get("annotation").c_str();
-                std::string text_report = form.get("text_report").c_str();
-                std::string date_creation = form.get("date_creation").c_str();
-
-                database::Report report;
-                report.update_by_id(report_id, name_report, author_id, annotation, text_report, date_creation);
-
-                response.setStatus(Poco::Net::HTTPResponse::HTTP_OK);
-                response.setChunkedTransferEncoding(true);
-                response.setContentType("application/json");
-                response.send();
-                return;
-            }
             if (hasSubstr(request.getURI(), "/search_report") &&
                 (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET)&&
                 form.has("report_id"))

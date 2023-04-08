@@ -61,66 +61,6 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
 
-    /update_by_id:
-        get:
-            summary: Обновить доклад
-            parameters:
-                - name: report_id
-                  description: идентификатор
-                  in: query
-                  required: true
-                  schema:
-                      $ref: "#/components/schemas/report_id"
-                - name: name_report
-                  description: Название доклада
-                  in: query
-                  required: true
-                  schema:
-                      type: string
-                - name: author_id
-                  description: id пользователя
-                  in: query
-                  required: true
-                  schema:
-                      type: integer
-                - name: annotation
-                  description: Аннотация
-                  in: query
-                  required: true
-                  schema:
-                      type: string
-                - name: text_report
-                  description: Текст доклада
-                  in: query
-                  required: true
-                  schema:
-                      type: string
-                - name: date_creation
-                  description: Дата создания
-                  in: query
-                  required: true
-                  schema:
-                      type: string
-            responses:
-                "200":
-                    description: All reports of conference were printed
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/report"
-                404:
-                    description: Error with printing conferences
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                500:
-                    description: Unexpected error
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-
     /search_report:
         get:
             summary: Поиск доклада

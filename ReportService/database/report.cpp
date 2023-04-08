@@ -83,36 +83,6 @@ namespace database
         return report;
     }
 
-    std::optional<Report> Report::update_by_id(long id, std::string name_report, long author_id, std::string annotation, std::string text_report, std::string date_creation)
-    {
-        try
-        {
-            Poco::Data::Session session = database::Database::get().create_session();
-            Poco::Data::Statement update(session);
-            update << "UPDATE id, name_report, author_id, annotation, text_report, date_creation FROM Report where id=?",
-                use(id),
-                use(name_report),
-                use(author_id),
-                use(annotation),
-                use(text_report),
-                use(date_creation);
-
-            update.execute();
-
-            std::cout << "updated:" << id << std::endl;
-        }
-
-        catch (Poco::Data::MySQL::ConnectionException &e)
-        {
-            std::cout << "connection:" << e.what() << std::endl;
-        }
-        catch (Poco::Data::MySQL::StatementException &e)
-        {
-            std::cout << "statement:" << e.what() << std::endl;   
-        }
-        return {};
-    }
-
     std::optional<Report> Report::search_report(long id)
     {
         try

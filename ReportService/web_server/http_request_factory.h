@@ -55,7 +55,7 @@ public:
 
         std::cout << "request:" << request.getURI()<< std::endl;
         if (hasSubstr(request.getURI(),"/add_report") ||
-            hasSubstr(request.getURI(),"/update_by_id") ||
+            hasSubstr(request.getURI(),"/read_all_reports") ||
             hasSubstr(request.getURI(),"/search_report")) 
             return new ReportHandler(_format);
         return 0;

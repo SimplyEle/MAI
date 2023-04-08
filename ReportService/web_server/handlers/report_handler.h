@@ -212,8 +212,8 @@ public:
                 Poco::JSON::Stringifier::stringify(result.toJSON(), ostr);
                 return;
             }
-            if (hasSubstr(request.getURI(), "/read_all_reports") &&
-                    (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET))
+            else if (hasSubstr(request.getURI(), "/read_all_reports") &&
+                (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET))
             {                
                 database::Report report;
                 auto results = report.read_all_reports();
@@ -229,7 +229,7 @@ public:
 
                 return;
             }
-            if (hasSubstr(request.getURI(), "/search_report") &&
+            else if (hasSubstr(request.getURI(), "/search_report") &&
                 (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET)&&
                 form.has("report_id"))
             { 

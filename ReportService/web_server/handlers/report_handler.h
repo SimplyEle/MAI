@@ -216,7 +216,7 @@ public:
                     (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET))
             {                
                 database::Report report;
-                auto results = report.read_all_confs();
+                auto results = report.read_all_reports();
 
                 Poco::JSON::Array arr;
                 for (auto s : results)

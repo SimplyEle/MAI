@@ -91,6 +91,28 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
 
+    /read_all_reports:
+        get:
+            summary: Вывести все доклады
+            responses:
+                "200":
+                    description: All reports were printed
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/reports"
+                404:
+                    description: Error with conferences get read
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                500:
+                    description: Unexpected error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
 components:
     schemas:
         report_id:

@@ -250,7 +250,8 @@ public:
                 return;
             }
             else if (hasSubstr(request.getURI(), "/read_all_confs") &&
-                    (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET))
+                    (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET) &&
+                    form.has("conf_id"))
             {                
                 database::Conference reportconf;
                 auto results = reportconf.read_all_confs();

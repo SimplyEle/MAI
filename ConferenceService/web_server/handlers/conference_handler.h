@@ -249,23 +249,6 @@ public:
                 Poco::JSON::Stringifier::stringify(reportconf.toJSON(), ostr);
                 return;
             }
-            else if (hasSubstr(request.getURI(), "/read_all_confs") &&
-                    (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET))
-            {                
-                database::Conference reportconf;
-                auto results = reportconf.read_all_confs();
-
-                Poco::JSON::Array arr;
-                for (auto s : results)
-                    arr.add(s.toJSON());
-                response.setStatus(Poco::Net::HTTPResponse::HTTP_OK);
-                response.setChunkedTransferEncoding(true);
-                response.setContentType("application/json");
-                std::ostream &ostr = response.send();
-                Poco::JSON::Stringifier::stringify(arr, ostr);
-
-                return;
-            }
             else if (hasSubstr(request.getURI(), "/read_all_reports_from_conf") &&
                     (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET)&&
                     form.has("conf_id"))

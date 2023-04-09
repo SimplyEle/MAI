@@ -57,7 +57,6 @@ public:
         if (hasSubstr(request.getURI(),"/add_category") ||
             hasSubstr(request.getURI(),"/add_conf") ||
             hasSubstr(request.getURI(),"/add_report_to_conf") ||
-            hasSubstr(request.getURI(),"/read_all_confs") ||
             hasSubstr(request.getURI(),"/read_all_reports_from_conf")) 
             
             return new ConferenceHandler(_format);

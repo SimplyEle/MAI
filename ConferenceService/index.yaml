@@ -153,29 +153,6 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Error"
 
-    /read_all_confs:
-        get:
-            summary: Получить список всех конференций
-            responses:
-                "200":
-                    description: All conferences were printed
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/conferences"
-                404:
-                    description: Error with conferences get read
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-                500:
-                    description: Unexpected error
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Error"
-
 components:
     schemas:
         categories:

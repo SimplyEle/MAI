@@ -28,7 +28,6 @@ namespace database
             std::string &description();
             std::string &date_of_conf();
 
-            std::vector<Conference> read_all_confs();
             void add_conf(std::string name_conf, long organizer_id, long category_id, std::string description, std::string date_of_conf);
 
             Poco::JSON::Object::Ptr toJSON() const;

@@ -83,43 +83,6 @@ namespace database
         return conf;
     }
 
-    std::vector<Conference> Conference::read_all_confs()
-    {
-        try
-        {
-            Poco::Data::Session session = database::Database::get().create_session();
-            Statement select(session);
-            std::vector<Conference> result;
-            Conference a;
-            select << "SELECT id, name_conf, organizer_id, category_id, description, date_of_conf FROM Conference",
-                into(a._id),
-                into(a._name_conf),
-                into(a._organizer_id),
-                into(a._category_id),
-                into(a._description),
-                into(a._date_of_conf),
-                range(0, 1); //  iterate over result set one row at a time
-
-            while (!select.done())
-            {
-                if (select.execute())
-                    result.push_back(a);
-            }
-            return result;
-        }
-
-        catch (Poco::Data::MySQL::ConnectionException &e)
-        {
-            std::cout << "connection:" << e.what() << std::endl;
-            throw;
-        }
-        catch (Poco::Data::MySQL::StatementException &e)
-        {
-            std::cout << "statement:" << e.what() << std::endl;
-            throw;
-        }
-    }
-
 
     void Conference::add_conf(std::string name_conf, long organizer_id, long category_id, std::string description, std::string date_of_conf)
     {

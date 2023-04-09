@@ -91,14 +91,14 @@ namespace database
             Statement select(session);
             std::vector<Report> result;
             Report a;
-            select << "SELECT id, name_report, author_id, annotation, text_report, date_creation FROM Report",
+            select << "SELECT id, name_report, author_id, annotation, text_report, date_creation FROM Report LIMIT TOP 4",
                 into(a._id),
                 into(a._name_report),
                 into(a._author_id),
                 into(a._annotation),
                 into(a._text_report),
                 into(a._date_creation),
-                now;
+                range(0, 1); //  iterate over result set one row at a time
 
             while (!select.done())
             {

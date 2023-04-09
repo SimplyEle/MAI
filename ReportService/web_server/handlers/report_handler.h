@@ -120,6 +120,13 @@ public:
                        HTTPServerResponse &response)
     {
         HTMLForm form(request, request.stream());
+        
+        long cur_user_id = TryAuth(request, response);
+
+        if(cur_user_id == 0){
+            //No Auth
+            return;
+        }
         try
         {/*
             if (form.has("id") && (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET))
@@ -217,7 +224,7 @@ public:
             {                
                 database::Report report;
                 auto results = report.read_all_reports();
-                std::cout << "read_all_reports() отработал" << std::endl;
+                
                 Poco::JSON::Array arr;
                 for (auto s : results)
                     arr.add(s.toJSON());

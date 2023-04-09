@@ -130,6 +130,10 @@ public:
         {
             if (form.has("id") && (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET))
             {
+                if(TryAuth(request, response) == 0){
+                    //No Auth
+                    return;
+                }
                 long id = atol(form.get("id").c_str());
 
                 std::optional<database::User> result = database::User::read_by_id(id);

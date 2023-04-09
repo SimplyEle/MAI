@@ -92,7 +92,7 @@ namespace database
             std::vector<Report> result;
             Report a;
             std::cout << "создание сессии, инициализация отработали" << std::endl;
-            select << "SELECT id, name_report, author_id, annotation, text_report, date_creation FROM Report",
+            select << "SELECT id, name_report, author_id, annotation, text_report, date_creation FROM `Report`",
                 into(a._id),
                 into(a._name_report),
                 into(a._author_id),

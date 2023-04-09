@@ -91,7 +91,7 @@ namespace database
             Statement select(session);
             std::vector<Report> result;
             Report a;
-            select << "SELECT id, name_report, author_id, annotation, text_report, date_creation FROM Report LIMIT TOP 4",
+            select << "SELECT id, name_report, author_id, annotation, text_report, date_creation FROM Report LIMIT TOP 3",
                 into(a._id),
                 into(a._name_report),
                 into(a._author_id),

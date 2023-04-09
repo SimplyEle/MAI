@@ -104,6 +104,7 @@ namespace database
             while (!select.done())
             {
                 std::cout << "мы в while" << std::endl;
+                std::cout << select.execute() << std::endl;
                 if (select.execute()) {
                     std::cout << "зашли в if" << std::endl;
                     result.push_back(a);

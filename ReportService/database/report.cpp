@@ -91,7 +91,7 @@ namespace database
             Statement select(session);
             std::vector<Report> result;
             Report a;
-            cout << "создание сессии, инициализация отработали" << endl;
+            std::cout << "создание сессии, инициализация отработали" << std::endl;
             select << "SELECT id, name_report, author_id, annotation, text_report, date_creation FROM Report",
                 into(a._id),
                 into(a._name_report),
@@ -100,12 +100,12 @@ namespace database
                 into(a._text_report),
                 into(a._date_creation),
                 range(0, 1); //  iterate over result set one row at a time
-            cout << "select отработал" << endl;
+            std::cout << "select отработал" << std::endl;
             while (!select.done())
             {
-                cout << "мы в while" << endl;
+                std::cout << "мы в while" << std::endl;
                 if (select.execute())
-                    cout << "зашли в if" << endl;
+                    std::cout << "зашли в if" << std::endl;
                     result.push_back(a);
             }
             return result;

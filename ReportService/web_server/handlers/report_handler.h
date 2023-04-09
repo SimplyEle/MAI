@@ -217,7 +217,7 @@ public:
             {                
                 database::Report report;
                 auto results = report.read_all_reports();
-
+                cout << "read_all_reports() отработал" << endl;
                 Poco::JSON::Array arr;
                 for (auto s : results)
                     arr.add(s.toJSON());

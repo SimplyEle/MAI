@@ -1,6 +1,11 @@
 USE cnfdb;
+SET FOREIGN_KEY_CHECKS=0;
+DROP TABLE ReportConference;
+DROP TABLE Conference;
+DROP TABLE Category;
+DROP TABLE Report;
+DROP TABLE User;
 
-/*
 CREATE TABLE IF NOT EXISTS `User` (`id` INT NOT NULL AUTO_INCREMENT,
                         `first_name` VARCHAR(256) NOT NULL,
                         `last_name` VARCHAR(256) NOT NULL,
@@ -47,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `ReportConference`(`report_id` int NOT NULL ,
                         KEY `FK_3` (`conf_id`),
                         CONSTRAINT `FK_5` FOREIGN KEY `FK_3` (`conf_id`) REFERENCES `Conference` (`id`));
 
-USE cnfdb;
+/*
 SELECT * FROM Report;
 SELECT * FROM ReportConference;
 SELECT * FROM User;

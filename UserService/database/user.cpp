@@ -36,7 +36,7 @@ namespace database
                             << "`password` VARCHAR(256) NOT NULL,"
                             << "`email` VARCHAR(256) NULL,"
                             << "`title` VARCHAR(1024) NULL,"
-                            << "PRIMARY KEY (`id`),KEY `fn` (`first_name`),KEY `ln` (`last_name`));",
+                            << "PRIMARY KEY (`id`),KEY `fn` (`first_name`),KEY `ln` (`last_name`));"
                             << hint,
                     now;
 
@@ -104,9 +104,10 @@ namespace database
             Poco::Data::Statement insert(session);
             insert << "INSERT INTO Seqs values();";
             insert.execute();
-            std::cout << "inserted:" << id << std::endl;
 
             long id;
+            std::cout << "inserted:" << id << std::endl;
+
             Poco::Data::Statement select(session);
             select << "SELECT LAST_INSERT_ID()",
                 into(id),
@@ -172,6 +173,7 @@ namespace database
     {
         try
         {
+            std::string hint = database::Database::sharding_hint(id);
             Poco::Data::Session session = database::Database::get().create_session();
             Poco::Data::Statement select(session);
             User a;

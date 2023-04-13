@@ -34,7 +34,7 @@ namespace database
 
                         << "PRIMARY KEY (`id`),"
                         << "KEY `FK_2` (`category_id`),"
-                        << "CONSTRAINT `FK_1` FOREIGN KEY `FK_2` (`category_id`) REFERENCES `Category` (`id`);",
+                        << "CONSTRAINT `FK_1` FOREIGN KEY `FK_2` (`category_id`) REFERENCES `Category` (`id`));",
                 now;
         }
 

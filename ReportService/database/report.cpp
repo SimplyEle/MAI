@@ -33,7 +33,7 @@ namespace database
                         << "`text_report`   text NOT NULL ,"
                         << "`date_creation` text NOT NULL ,"
 
-                        << "PRIMARY KEY (`id`);",
+                        << "PRIMARY KEY (`id`));",
                 now;
         }
 

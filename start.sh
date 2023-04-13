@@ -4,5 +4,5 @@ export DB_LOGIN=cnfuser
 export DB_PASSWORD=cnfuser
 export DB_DATABASE=cnfdb
 
-./build/arch_of_software
+./build/arch_test
 

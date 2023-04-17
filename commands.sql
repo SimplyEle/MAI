@@ -68,16 +68,16 @@ truncate table User;
 */
 
 INSERT INTO `User`
-(login, password, first_name, last_name, email, title)
-VALUES('Helen', 'helen', 'Helen', 'KarKarycheva', 'smeshar@yandex.ru', 'Mrs');
+(id, login, password, first_name, last_name, email, title)
+VALUES(1, 'Helen', 'helen', 'Helen', 'KarKarycheva', 'smeshar@yandex.ru', 'Mrs');
 
 INSERT INTO `User`
-(login, password, first_name, last_name, email, title)
-VALUES('basta', 'moyaigra', 'Vasiliy', 'Vak', 'basta@yandex.ru', 'Mr');
+(id, login, password, first_name, last_name, email, title)
+VALUES(2, 'basta', 'moyaigra', 'Vasiliy', 'Vak', 'basta@yandex.ru', 'Mr');
 
 INSERT INTO `User`
-(login, password, first_name, last_name, email, title)
-VALUES('vesna', 'music', 'Music', 'Vesna', 'music_vesna@yandex.ru', 'Mrs');
+(id, login, password, first_name, last_name, email, title)
+VALUES(3, 'vesna', 'music', 'Music', 'Vesna', 'music_vesna@yandex.ru', 'Mrs');
 
 INSERT INTO Category
 (name_of_category)

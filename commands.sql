@@ -22,9 +22,7 @@ CREATE TABLE IF NOT EXISTS `Report`(`id` int NOT NULL AUTO_INCREMENT,
                         `text_report`   text NOT NULL ,
                         `date_creation` text NOT NULL ,
 
-                        PRIMARY KEY (`id`),
-                        KEY `FK_2` (`author_id`),
-                        CONSTRAINT `FK_2` FOREIGN KEY `FK_2` (`author_id`) REFERENCES `User` (`id`));
+                        PRIMARY KEY (`id`));
                         
 CREATE TABLE IF NOT EXISTS `Category`(`id` int NOT NULL AUTO_INCREMENT,
                         `name_of_category` varchar(1024) NOT NULL ,
@@ -39,9 +37,7 @@ CREATE TABLE IF NOT EXISTS `Conference`(`id` int NOT NULL AUTO_INCREMENT,
 
                         PRIMARY KEY (`id`),
                         KEY `FK_2` (`category_id`),
-                        CONSTRAINT `FK_1` FOREIGN KEY `FK_2` (`category_id`) REFERENCES `Category` (`id`),
-                        KEY `FK_3` (`organizer_id`),
-                        CONSTRAINT `FK_3` FOREIGN KEY `FK_3` (`organizer_id`) REFERENCES `User` (`id`));
+                        CONSTRAINT `FK_1` FOREIGN KEY `FK_2` (`category_id`) REFERENCES `Category` (`id`));
 
 CREATE TABLE IF NOT EXISTS `ReportConference`(`report_id` int NOT NULL ,
                         `conf_id`   int NOT NULL ,
@@ -59,6 +55,7 @@ SELECT * FROM User;
 SELECT * FROM Conference;
 SELECT * FROM Category;
 
+USE cnfdb;
 SET FOREIGN_KEY_CHECKS=0;
 truncate table ReportConference;
 truncate table Conference;

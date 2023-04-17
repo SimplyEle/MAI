@@ -25,16 +25,30 @@ namespace database
         {
 
             Poco::Data::Session session = database::Database::get().create_session();
-            Statement create_stmt(session);
-            create_stmt << "CREATE TABLE IF NOT EXISTS `User` (`id` INT NOT NULL AUTO_INCREMENT,"
-                        << "`first_name` VARCHAR(256) NOT NULL,"
-                        << "`last_name` VARCHAR(256) NOT NULL,"
-                        << "`login` VARCHAR(256) NOT NULL,"
-                        << "`password` VARCHAR(256) NOT NULL,"
-                        << "`email` VARCHAR(256) NULL,"
-                        << "`title` VARCHAR(1024) NULL,"
-                        << "PRIMARY KEY (`id`),KEY `fn` (`first_name`),KEY `ln` (`last_name`));",
-                now;
+            for (auto &hint : database::Database::get_all_hints()) {
+
+                Statement create_stmt(session);
+                
+                create_stmt << "CREATE TABLE IF NOT EXISTS `User` (`id` INT NOT NULL,"
+                            << "`first_name` VARCHAR(256) NOT NULL,"
+                            << "`last_name` VARCHAR(256) NOT NULL,"
+                            << "`login` VARCHAR(256) NOT NULL,"
+                            << "`password` VARCHAR(256) NOT NULL,"
+                            << "`email` VARCHAR(256) NULL,"
+                            << "`title` VARCHAR(1024) NULL,"
+                            << "PRIMARY KEY (`id`),KEY `fn` (`first_name`),KEY `ln` (`last_name`));"
+                            << hint,
+                    now;
+
+                std::cout << create_stmt.toString() << std::endl;
+            }
+
+            Statement create_seqs(session);
+
+            create_seqs << "CREATE TABLE IF NOT EXISTS Seqs(`id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT);",
+                        now;
+
+            std::cout << create_seqs.toString() << std::endl;
         }
 
         catch (Poco::Data::MySQL::ConnectionException &e)
@@ -83,22 +97,64 @@ namespace database
         return user;
     }
 
+    long getNextId(Poco::Data::Session session)
+    {
+        try
+        { 
+            Poco::Data::Statement insert(session);
+            insert << "INSERT INTO Seqs values();";
+            insert.execute();
+
+            long id;
+            std::cout << "inserted:" << id << std::endl;
+
+            Poco::Data::Statement select(session);
+            select << "SELECT LAST_INSERT_ID()",
+                into(id),
+                range(0, 1); //  iterate over result set one row at a time
+
+            if (!select.done())
+            {
+                select.execute();
+            }
+
+            Poco::Data::Statement deleteStmt(session);
+            deleteStmt << "delete from Seqs;";
+            deleteStmt.execute();
+
+            return id;
+        }
+        catch (Poco::Data::MySQL::ConnectionException &e)
+        {
+            std::cout << "connection:" << e.what() << std::endl;
+            throw;
+        }
+        catch (Poco::Data::MySQL::StatementException &e)
+        {
+            std::cout << "statement:" << e.what() << std::endl;
+            throw;
+        }
+    }
+
     std::optional<long> User::auth(std::string &login, std::string &password)
     {
         try
         {
             Poco::Data::Session session = database::Database::get().create_session();
-            Poco::Data::Statement select(session);
-            long id;
-            select << "SELECT id FROM User where login=? and password=?",
-                into(id),
-                use(login),
-                use(password),
-                range(0, 1); //  iterate over result set one row at a time
+            for (auto &hint : database::Database::get_all_hints()) {
+                Poco::Data::Statement select(session);
+                long id;
+                select << "SELECT id FROM User where login=? and password=?" << hint,
+                    into(id),
+                    use(login),
+                    use(password),
+                    range(0, 1); //  iterate over result set one row at a time
 
-            select.execute();
-            Poco::Data::RecordSet rs(select);
-            if (rs.moveFirst()) return id;
+                select.execute();
+                Poco::Data::RecordSet rs(select);
+                if (rs.moveFirst()) return id;
+            }
+
         }
 
         catch (Poco::Data::MySQL::ConnectionException &e)
@@ -117,10 +173,11 @@ namespace database
     {
         try
         {
+            std::string hint = database::Database::sharding_hint(id);
             Poco::Data::Session session = database::Database::get().create_session();
             Poco::Data::Statement select(session);
             User a;
-            select << "SELECT id, first_name, last_name, email, title,login,password FROM User where id=?",
+            select << "SELECT id, first_name, last_name, email, title,login,password FROM User where id=?" << hint,
                 into(a._id),
                 into(a._first_name),
                 into(a._last_name),
@@ -154,23 +211,26 @@ namespace database
         try
         {
             Poco::Data::Session session = database::Database::get().create_session();
-            Statement select(session);
             std::vector<User> result;
-            User a;
-            select << "SELECT id, first_name, last_name, email, title, login, password FROM User",
-                into(a._id),
-                into(a._first_name),
-                into(a._last_name),
-                into(a._email),
-                into(a._title),
-                into(a._login),
-                into(a._password),
-                range(0, 1); //  iterate over result set one row at a time
 
-            while (!select.done())
-            {
-                if (select.execute())
-                    result.push_back(a);
+            for (auto &hint : database::Database::get_all_hints()) {
+                Statement select(session);
+                User a;
+                select << "SELECT id, first_name, last_name, email, title, login, password FROM User" << hint,
+                    into(a._id),
+                    into(a._first_name),
+                    into(a._last_name),
+                    into(a._email),
+                    into(a._title),
+                    into(a._login),
+                    into(a._password),
+                    range(0, 1); //  iterate over result set one row at a time
+
+                while (!select.done())
+                {
+                    if (select.execute())
+                        result.push_back(a);
+                }
             }
             return result;
         }
@@ -193,27 +253,32 @@ namespace database
         try
         {
             Poco::Data::Session session = database::Database::get().create_session();
-            Statement select(session);
             std::vector<User> result;
-            User a;
+
             first_name += "%";
             last_name += "%";
-            select << "SELECT id, first_name, last_name, email, title, login, password FROM User where first_name LIKE ? and last_name LIKE ?",
-                into(a._id),
-                into(a._first_name),
-                into(a._last_name),
-                into(a._email),
-                into(a._title),
-                into(a._login),
-                into(a._password),
-                use(first_name),
-                use(last_name),
-                range(0, 1); //  iterate over result set one row at a time
+            
+            for (auto &hint : database::Database::get_all_hints()) {
+                Statement select(session);
+                
+                User a;
+                select << "SELECT id, first_name, last_name, email, title, login, password FROM User where first_name LIKE ? and last_name LIKE ?" << hint,
+                    into(a._id),
+                    into(a._first_name),
+                    into(a._last_name),
+                    into(a._email),
+                    into(a._title),
+                    into(a._login),
+                    into(a._password),
+                    use(first_name),
+                    use(last_name),
+                    range(0, 1); //  iterate over result set one row at a time
 
-            while (!select.done())
-            {
-                if (select.execute())
-                    result.push_back(a);
+                while (!select.done())
+                {
+                    if (select.execute())
+                        result.push_back(a);
+                }
             }
             return result;
         }
@@ -237,9 +302,14 @@ namespace database
         try
         {
             Poco::Data::Session session = database::Database::get().create_session();
+
+            _id = getNextId(session);
+            std::string hint = database::Database::sharding_hint(_id);
+
             Poco::Data::Statement insert(session);
 
-            insert << "INSERT INTO User (first_name,last_name,email,title,login,password) VALUES(?, ?, ?, ?, ?, ?)",
+            insert << "INSERT INTO User (first_name,last_name,email,title,login,password) VALUES(?, ?, ?, ?, ?, ?)" << hint,
+                use(_id),
                 use(_first_name),
                 use(_last_name),
                 use(_email),
@@ -248,16 +318,6 @@ namespace database
                 use(_password);
 
             insert.execute();
-
-            Poco::Data::Statement select(session);
-            select << "SELECT LAST_INSERT_ID()",
-                into(_id),
-                range(0, 1); //  iterate over result set one row at a time
-
-            if (!select.done())
-            {
-                select.execute();
-            }
             std::cout << "inserted:" << _id << std::endl;
         }
         catch (Poco::Data::MySQL::ConnectionException &e)

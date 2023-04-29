@@ -3,7 +3,7 @@ version: '2.1'
 services:
   confdb-node-1:
     build:
-      context: mysql
+      context: mariadb
       dockerfile: Dockerfile
     container_name: confdb-node-1
     restart: unless-stopped
@@ -29,7 +29,7 @@ services:
 
   confdb-node-2:
     build:
-      context: mysql
+      context: mariadb
       dockerfile: Dockerfile
     container_name: confdb-node-2
     restart: unless-stopped

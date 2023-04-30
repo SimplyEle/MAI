@@ -192,7 +192,7 @@ namespace database
                                             Poco::Data::RecordSet rs(select);
 
                                             bool more = rs.moveFirst();
-                                            while (rs.moveFirst())
+                                            while (more)
                                             {
                                                 long a;
                                                 a = rs[0].convert<long>();
@@ -363,7 +363,7 @@ namespace database
                         std::end(v),
                         std::back_inserter(result));
             }
-            
+
             return result;
         }
 

@@ -121,7 +121,6 @@ auto main() -> int
         }
 
         std::cout << "Inserted " << i << " records" << std::endl; 
-
     }
     catch (Poco::Data::MySQL::ConnectionException &e)
     {

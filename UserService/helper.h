@@ -92,33 +92,31 @@ std::optional<std::string> do_get(const std::string &url, const std::string &log
         b64in << token;
         b64in.close();
         std::string identity = "Basic " + os.str();
-        std::cout << "DO_GET 5" << std::endl;
+        
         Poco::URI uri(url);
         Poco::Net::HTTPClientSession s(uri.getHost(), uri.getPort());
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uri.toString());
-        std::cout << "DO_GET 6" << std::endl;
+        
         request.setVersion(Poco::Net::HTTPMessage::HTTP_1_1);
         request.setContentType("application/json");
         request.set("Authorization", identity);
         request.set("Accept", "application/json");
         request.setKeepAlive(true);
-        std::cout << "DO_GET 1" << std::endl;
+        
         s.sendRequest(request);
 
         Poco::Net::HTTPResponse response;
         std::istream &rs = s.receiveResponse(response);
-        std::cout <<  "os.str() = " << os.str() << std::endl;
+        
 
         while (rs)
         {
             char c{};
             rs.read(&c, 1);
-            std::cout << "DO_GET 2" << std::endl;
+            
             if (rs)
             {
                 string_result += c;
-                std::cout << "DO_GET 3" << std::endl;
-                std::cout << string_result << std::endl;
             }
         }
 
@@ -157,22 +155,22 @@ long TryAuth(HTTPServerRequest &request,
         std::cout << "password:" << password << std::endl;
         std::string host = "localhost";
         std::string url;
-        std::cout << "TRY_AUTH 1" << std::endl;
+        
         if(std::getenv("SERVICE_HOST")!=nullptr) host = std::getenv("SERVICE_HOST");
         
         url = "http://" + host+":8080/auth";
-        std::cout << "TRY_AUTH 2" << std::endl;
+        
         try{
             std::optional<std::string> authStr = do_get(url, login, password);
-            std::cout << "TRY_AUTH 3" << std::endl;
+            
             if (authStr.has_value())
             {
                 Poco::JSON::Parser parser;
-                std::cout << "TRY_AUTH 4" << std::endl;
+                
                 Poco::Dynamic::Var result = parser.parse(authStr.value());
-                std::cout << "TRY_AUTH 5" << std::endl;
+                
                 Poco::JSON::Object::Ptr object = result.extract<Poco::JSON::Object::Ptr>();
-                std::cout << "TRY_AUTH 6" << std::endl;
+                
                 return object->getValue<long>("main_id");
             }
         }

@@ -116,6 +116,7 @@ std::optional<std::string> do_get(const std::string &url, const std::string &log
             if (rs) {
                 string_result += c;
                 std::cout << "DO_GET 3" << std::endl;
+                std::cout << string_result << std::endl;
             }             
         }
 

@@ -107,18 +107,19 @@ std::optional<std::string> do_get(const std::string &url, const std::string &log
 
         Poco::Net::HTTPResponse response;
         std::istream &rs = s.receiveResponse(response);
-        std::cout << &rs << std::endl;
+        std::cout <<  "os.str() = " << os.str() << std::endl;
 
         while (rs)
         {
             char c{};
             rs.read(&c, 1);
             std::cout << "DO_GET 2" << std::endl;
-            if (rs) {
+            if (rs)
+            {
                 string_result += c;
                 std::cout << "DO_GET 3" << std::endl;
                 std::cout << string_result << std::endl;
-            }             
+            }
         }
 
         if (response.getStatus() != 200)

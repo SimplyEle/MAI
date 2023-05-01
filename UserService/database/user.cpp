@@ -193,7 +193,7 @@ namespace database
 
                                             select.execute();
                                             Poco::Data::RecordSet rs(select);
-
+                                            std::cout << id << std::endl;
                                             bool more = rs.moveFirst();
                                             while (more)
                                             {
@@ -202,6 +202,7 @@ namespace database
                                                 result.push_back(a);
                                                 more = rs.moveNext();
                                             }
+                                            std::cout << "result: " << result[0] << std::endl;
                                             return result;
                                         });
 

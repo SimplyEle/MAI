@@ -191,7 +191,9 @@ public:
                 std::string login, password;
                 if (scheme == "Basic")
                 {
+                    std::cout << "if scheme == Basic" << std::endl;
                     get_identity(info, login, password);
+                    std::cout << login << " " << password << std::endl;
                     if (auto id = database::User::auth(login, password))
                     {
                         response.setStatus(Poco::Net::HTTPResponse::HTTP_OK);

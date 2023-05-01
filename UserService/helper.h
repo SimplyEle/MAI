@@ -107,6 +107,7 @@ std::optional<std::string> do_get(const std::string &url, const std::string &log
 
         Poco::Net::HTTPResponse response;
         std::istream &rs = s.receiveResponse(response);
+        std::cout << &rs << std::endl;
 
         while (rs)
         {

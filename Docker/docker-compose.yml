@@ -76,6 +76,17 @@ services:
         condition: service_healthy
       confdb-node-2:
         condition: service_healthy
+  
+  cache:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning 
+    networks:
+      - cnf-network
+    volumes: 
+      - cache:/data
 
   user_service:
     build:
@@ -89,13 +100,17 @@ services:
       - DB_LOGIN=cnfuser
       - DB_PASSWORD=cnfuser
       - DB_DATABASE=cnfdb
+      - CACHE=cache:6379
     ports:
       - 8080:8080
     networks:
       - cnf-network
     depends_on:
+      cache:
+        condition: service_started
       proxysql:
         condition: service_started
+      
     
   conference_service:
     build:
@@ -143,7 +158,8 @@ volumes:
   confdb-node-1-data:
   confdb-node-2-data:
   proxysql-data:
-
+  cache:
+  
 networks:
   cnf-network:
     driver: "bridge"

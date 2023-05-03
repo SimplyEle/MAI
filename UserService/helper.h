@@ -92,27 +92,32 @@ std::optional<std::string> do_get(const std::string &url, const std::string &log
         b64in << token;
         b64in.close();
         std::string identity = "Basic " + os.str();
-
+        
         Poco::URI uri(url);
         Poco::Net::HTTPClientSession s(uri.getHost(), uri.getPort());
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uri.toString());
+        
         request.setVersion(Poco::Net::HTTPMessage::HTTP_1_1);
         request.setContentType("application/json");
         request.set("Authorization", identity);
         request.set("Accept", "application/json");
         request.setKeepAlive(true);
-
+        
         s.sendRequest(request);
 
         Poco::Net::HTTPResponse response;
         std::istream &rs = s.receiveResponse(response);
+        
 
         while (rs)
         {
             char c{};
             rs.read(&c, 1);
+            
             if (rs)
+            {
                 string_result += c;
+            }
         }
 
         if (response.getStatus() != 200)
@@ -150,21 +155,23 @@ long TryAuth(HTTPServerRequest &request,
         std::cout << "password:" << password << std::endl;
         std::string host = "localhost";
         std::string url;
-
+        
         if(std::getenv("SERVICE_HOST")!=nullptr) host = std::getenv("SERVICE_HOST");
         
         url = "http://" + host+":8080/auth";
-
+        
         try{
             std::optional<std::string> authStr = do_get(url, login, password);
-
+            
             if (authStr.has_value())
             {
                 Poco::JSON::Parser parser;
+                
                 Poco::Dynamic::Var result = parser.parse(authStr.value());
+                
                 Poco::JSON::Object::Ptr object = result.extract<Poco::JSON::Object::Ptr>();
-
-                return object->getValue<long>("id");
+                
+                return object->getValue<long>("main_id");
             }
         }
         catch(...)

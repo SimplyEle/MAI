@@ -20,7 +20,6 @@
 #include "Poco/Util/OptionSet.h"
 #include "Poco/Util/HelpFormatter.h"
 #include <iostream>
-#include <iostream>
 #include <fstream>
 
 using Poco::DateTimeFormat;
@@ -128,17 +127,32 @@ public:
         HTMLForm form(request, request.stream());
         try
         {
-            if (form.has("id") && (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET))
+            if (hasSubstr(request.getURI(), "/user"))
             {
-                if(TryAuth(request, response) == 0){
-                    //No Auth
-                    return;
-                }
                 long id = atol(form.get("id").c_str());
+                bool no_cache = false;
+                if (form.has("no_cache")) no_cache = true;
+
+                if (!no_cache)
+                {
+                    std::optional<database::User> result = database::User::read_from_cache_by_id(id);
+                    if (result)
+                    {
+                        //std::cout << "from cache" << std::endl;
+                        response.setStatus(Poco::Net::HTTPResponse::HTTP_OK);
+                        response.setChunkedTransferEncoding(true);
+                        response.setContentType("application/json");
+                        std::ostream &ostr = response.send();
+                        Poco::JSON::Stringifier::stringify(remove_password(result->toJSON()), ostr);
+                        return;
+                    }
+                }
 
                 std::optional<database::User> result = database::User::read_by_id(id);
                 if (result)
                 {
+                    if(!no_cache) result->save_to_cache();
+                    
                     response.setStatus(Poco::Net::HTTPResponse::HTTP_OK);
                     response.setChunkedTransferEncoding(true);
                     response.setContentType("application/json");
@@ -168,7 +182,6 @@ public:
                 std::string scheme;
                 std::string info;
                 request.getCredentials(scheme, info);
-                std::cout << "scheme: " << scheme << " identity: " << info << std::endl;
 
                 std::string login, password;
                 if (scheme == "Basic")
@@ -198,6 +211,36 @@ public:
                 Poco::JSON::Stringifier::stringify(root, ostr);
                 return;
             }
+            else if (hasSubstr(request.getURI(), "/read_by_login"))
+            {
+                std::string login = form.get("login");
+
+                std::optional<database::User> result = database::User::read_by_login(login);
+                if (result)
+                {
+                    response.setStatus(Poco::Net::HTTPResponse::HTTP_OK);
+                    response.setChunkedTransferEncoding(true);
+                    response.setContentType("application/json");
+                    std::ostream &ostr = response.send();
+                    Poco::JSON::Stringifier::stringify(result->toJSON(), ostr);
+                    return;
+                }
+                else
+                {
+                    response.setStatus(Poco::Net::HTTPResponse::HTTPStatus::HTTP_NOT_FOUND);
+                    response.setChunkedTransferEncoding(true);
+                    response.setContentType("application/json");
+                    Poco::JSON::Object::Ptr root = new Poco::JSON::Object();
+                    root->set("type", "/errors/not_found");
+                    root->set("title", "Internal exception");
+                    root->set("status", "404");
+                    root->set("detail", "user ot found");
+                    root->set("instance", "/user");
+                    std::ostream &ostr = response.send();
+                    Poco::JSON::Stringifier::stringify(root, ostr);
+                    return;
+                }
+            }
             else if (hasSubstr(request.getURI(), "/search"))
             {
 
@@ -215,61 +258,67 @@ public:
 
                 return;
             }
-            else if (request.getMethod() == Poco::Net::HTTPRequest::HTTP_POST)
+            else if (hasSubstr(request.getURI(), "/add_user") &&
+                    form.has("first_name") && form.has("last_name") && 
+                    form.has("title") && form.has("login") && form.has("password"))
             {
-                if (form.has("first_name") && form.has("last_name") && form.has("email") && form.has("title") && form.has("login") && form.has("password"))
+
+                database::User user;
+                user.first_name() = form.get("first_name");
+                user.last_name() = form.get("last_name");
+                user.title() = form.get("title");
+                user.login() = form.get("login");
+                user.password() = form.get("password");
+
+                bool no_cache = false;
+                if (form.has("no_cache")) no_cache = true;
+
+                bool check_result = true;
+                std::string message;
+                std::string reason;
+
+                std::optional<database::User> result = database::User::read_by_login(user.login());
+                if (result)
                 {
-                    database::User user;
-                    user.first_name() = form.get("first_name");
-                    user.last_name() = form.get("last_name");
-                    user.email() = form.get("email");
-                    user.title() = form.get("title");
-                    user.login() = form.get("login");
-                    user.password() = form.get("password");
+                    check_result = false;
+                    message += "User with this login already exists";
+                    message += "<br>";
+                }
+                if (!check_name(user.get_first_name(), reason))
+                {
+                    check_result = false;
+                    message += reason;
+                    message += "<br>";
+                }
 
-                    bool check_result = true;
-                    std::string message;
-                    std::string reason;
+                if (!check_name(user.get_last_name(), reason))
+                {
+                    check_result = false;
+                    message += reason;
+                    message += "<br>";
+                }
 
-                    if (!check_name(user.get_first_name(), reason))
-                    {
-                        check_result = false;
-                        message += reason;
-                        message += "<br>";
-                    }
-
-                    if (!check_name(user.get_last_name(), reason))
-                    {
-                        check_result = false;
-                        message += reason;
-                        message += "<br>";
-                    }
-
-                    if (!check_email(user.get_email(), reason))
-                    {
-                        check_result = false;
-                        message += reason;
-                        message += "<br>";
-                    }
-
-                    if (check_result)
-                    {
-                        user.save_to_mysql();
-                        response.setStatus(Poco::Net::HTTPResponse::HTTP_OK);
-                        response.setChunkedTransferEncoding(true);
-                        response.setContentType("application/json");
-                        std::ostream &ostr = response.send();
-                        ostr << user.get_id();
-                        return;
-                    }
-                    else
-                    {
-                        response.setStatus(Poco::Net::HTTPResponse::HTTP_NOT_FOUND);
-                        std::ostream &ostr = response.send();
-                        ostr << message;
-                        response.send();
-                        return;
-                    }
+                if (check_result)
+                {
+                    user.save_to_mysql();
+                    response.setStatus(Poco::Net::HTTPResponse::HTTP_OK);
+                    response.setChunkedTransferEncoding(true);
+                    response.setContentType("application/json");
+                    std::ostream &ostr = response.send();
+                    ostr << user.get_id();
+                    if(!no_cache){
+                        std::optional<database::User> result = database::User::read_by_login(user.login());
+                        result->save_to_cache();
+                    } 
+                    return;
+                }
+                else
+                {
+                    response.setStatus(Poco::Net::HTTPResponse::HTTP_NOT_FOUND);
+                    std::ostream &ostr = response.send();
+                    ostr << message;
+                    response.send();
+                    return;
                 }
             }
         }

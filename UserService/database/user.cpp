@@ -356,7 +356,7 @@ namespace database
 
                                             Poco::Data::Session session = database::Database::get().create_session();
                                             Statement select(session);
-                                            std::string select_str = "SELECT my_id, first_name, last_name, title FROM User where login='";
+                                            std::string select_str = "SELECT main_id, first_name, last_name, title FROM User where login='";
                                             select_str += login;
                                             select_str += "'";
                                             select_str += hint;

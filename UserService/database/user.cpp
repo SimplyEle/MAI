@@ -137,16 +137,19 @@ namespace database
                                             std::vector<long> result;
 
                                             Poco::Data::Session session = database::Database::get().create_session();
-                                            Poco::Data::Statement select(session);
-                                            long id;
-                                            select << "SELECT main_id FROM User where login=? and password=?" << hint,
-                                                into(id),
-                                                use(login),
-                                                use(password),
-                                                range(0, 1); //  iterate over result set one row at a time
-
+                                            Statement select(session);
+                                            std::string select_str = "SELECT main_id FROM User where login='";
+                                            select_str += login;
+                                            select_str += "' and password='";
+                                            select_str += password;
+                                            select_str += "'";
+                                            select_str += hint;
+                                            select << select_str;
+                                            std::cout << select_str << std::endl;
+                                            
                                             select.execute();
                                             Poco::Data::RecordSet rs(select);
+
                                             bool more = rs.moveFirst();
                                             while (more)
                                             {
@@ -155,11 +158,11 @@ namespace database
                                                 result.push_back(a);
                                                 more = rs.moveNext();
                                             }
-                                            return result;
-                                        });
+                                            return result; });
 
                 futures.emplace_back(std::move(handle));
             }
+
 
             for (std::future<std::vector<long>> &res : futures)
             {
@@ -364,18 +367,18 @@ namespace database
                                             std::cout << select_str << std::endl;
                                             
                                             select.execute();
-                                            Poco::Data::RecordSet record_set(select);
+                                            Poco::Data::RecordSet rs(select);
 
-                                            bool more = record_set.moveFirst();
+                                            bool more = rs.moveFirst();
                                             while (more)
                                             {
                                                 User a;
-                                                a._main_id = record_set[0].convert<long>();
-                                                a._first_name = record_set[1].convert<std::string>();
-                                                a._last_name = record_set[2].convert<std::string>();
-                                                a._title = record_set[3].convert<std::string>();
+                                                a._main_id = rs[0].convert<long>();
+                                                a._first_name = rs[1].convert<std::string>();
+                                                a._last_name = rs[2].convert<std::string>();
+                                                a._title = rs[3].convert<std::string>();
                                                 result.push_back(a);
-                                                more = record_set.moveNext();
+                                                more = rs.moveNext();
                                             }
                                             return result; });
 

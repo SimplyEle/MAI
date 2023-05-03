@@ -122,13 +122,6 @@ public:
                        HTTPServerResponse &response)
     {
         HTMLForm form(request, request.stream());
-        
-        long cur_user_id = TryAuth(request, response);
-
-        if(cur_user_id == 0){
-            //No Auth
-            return;
-        }
 
         try
         {/*

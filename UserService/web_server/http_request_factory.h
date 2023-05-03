@@ -56,6 +56,8 @@ public:
         std::cout << "request:" << request.getURI()<< std::endl;
         if (hasSubstr(request.getURI(),"/user") ||
             hasSubstr(request.getURI(),"/search") ||
+            hasSubstr(request.getURI(),"/read_by_login") ||
+            hasSubstr(request.getURI(),"/add_user") ||
             hasSubstr(request.getURI(),"/auth")) 
             return new UserHandler(_format);
         return 0;

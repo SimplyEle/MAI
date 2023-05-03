@@ -45,6 +45,28 @@
 #include <Poco/Base64Encoder.h>
 #include <Poco/Base64Decoder.h>
 
+using Poco::DateTimeFormat;
+using Poco::DateTimeFormatter;
+using Poco::ThreadPool;
+using Poco::Timestamp;
+using Poco::Net::HTMLForm;
+using Poco::Net::HTTPRequestHandler;
+using Poco::Net::HTTPRequestHandlerFactory;
+using Poco::Net::HTTPServer;
+using Poco::Net::HTTPServerParams;
+using Poco::Net::HTTPServerRequest;
+using Poco::Net::HTTPServerResponse;
+using Poco::Net::NameValueCollection;
+using Poco::Net::ServerSocket;
+using Poco::Util::Application;
+using Poco::Util::HelpFormatter;
+using Poco::Util::Option;
+using Poco::Util::OptionCallback;
+using Poco::Util::OptionSet;
+using Poco::Util::ServerApplication;
+
+std::string host = "user_service";
+
 bool get_identity(const std::string identity, std::string &login, std::string &password)
 {
     std::istringstream istr(identity);
@@ -106,63 +128,3 @@ std::optional<std::string> do_get(const std::string &url, const std::string &log
 
         return string_result;
     }
-
-long TryAuth(HTTPServerRequest &request,
-            HTTPServerResponse &response)
-{
-    std::string scheme;
-    std::string info;
-    std::string login, password;
-
-    try{
-        request.getCredentials(scheme, info);
-    }
-    catch(...)
-    {
-        //Ignored
-    }
-    
-    if (scheme == "Basic")
-    {
-        get_identity(info, login, password);
-        std::cout << "login:" << login << std::endl;
-        std::cout << "password:" << password << std::endl;
-        std::string host = "localhost";
-        std::string url;
-
-        if(std::getenv("SERVICE_HOST")!=nullptr) host = std::getenv("SERVICE_HOST");
-        
-        url = "http://" + host+":8080/auth";
-
-        try{
-            std::optional<std::string> authStr = do_get(url, login, password);
-
-            if (authStr.has_value())
-            {
-                Poco::JSON::Parser parser;
-                Poco::Dynamic::Var result = parser.parse(authStr.value());
-                Poco::JSON::Object::Ptr object = result.extract<Poco::JSON::Object::Ptr>();
-
-                return object->getValue<long>("id");
-            }
-        }
-        catch(...)
-        {
-            //Ignored
-        }
-    }
-
-    response.setStatus(Poco::Net::HTTPResponse::HTTPStatus::HTTP_UNAUTHORIZED);
-    response.setChunkedTransferEncoding(true);
-    response.setContentType("application/json");
-    Poco::JSON::Object::Ptr root = new Poco::JSON::Object();
-    root->set("type", "/errors/unauthorized");
-    root->set("title", "Unauthorized");
-    root->set("status", "401");
-    root->set("detail", "Invalid login or password");
-    root->set("instance", "/User");
-    std::ostream &ostr = response.send();
-    Poco::JSON::Stringifier::stringify(root, ostr);
-
-    return 0;
-}

@@ -63,9 +63,9 @@ truncate table Category;
 truncate table Report;
 truncate table User;
 */
-
+use cnfdb;
 INSERT INTO `User`
-(id, login, password, first_name, last_name, email, title)
+(main_id, login, password, first_name, last_name, email, title)
 VALUES(1, 'Helen', 'helen', 'Helen', 'KarKarycheva', 'smeshar@yandex.ru', 'Mrs');
 
 INSERT INTO `User`

@@ -1,0 +1,10 @@
+embeddings {
+  tensor_name: "before summarize:00000"
+  metadata_path: "00000/before summarize\\metadata.tsv"
+  tensor_path: "00000/before summarize\\tensors.tsv"
+}
+embeddings {
+  tensor_name: "after summarize:00000"
+  metadata_path: "00000/after summarize\\metadata.tsv"
+  tensor_path: "00000/after summarize\\tensors.tsv"
+}
